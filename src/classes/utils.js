@@ -20,4 +20,8 @@ export class Utils {
     const maskedPokemonID = pokemon.pokemonID.toString().padStart(3, "0");
     return maskedPokemonID;
   }
+  static getHomeSpritesUrl(pokemon) {
+    const spriteVersionUrl = pokemon.pokemonID > 721 ? pokemon.sprites.front_default : pokemon.sprites.frontDefaultGenerationVI;
+    return spriteVersionUrl;
+  }
 }

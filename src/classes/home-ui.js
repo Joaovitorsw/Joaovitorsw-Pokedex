@@ -20,7 +20,7 @@ export class HomeUI {
     const maskedPokemonID = Utils.getMaskedID(pokemon);
     const firstTypeName = Utils.getFirstType(pokemon);
 
-    const spriteVersionUrl = Utils.getPokemonSpriteUrl(pokemon);
+    const spriteVersionUrl = Utils.getHomeSpritesUrl(pokemon);
 
     const types = Utils.getPokemonTypes(pokemon);
 
