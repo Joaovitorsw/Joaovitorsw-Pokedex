@@ -1,6 +1,7 @@
 @import "homepage";
 @import "types";
 @import "mixins";
+@import "loading";
 
 html,
 main {
@@ -19,4 +20,21 @@ main {
     #d1ddff,
     #ceddff
   );
+}
+html.loading {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.144);
+  border-radius: 85px;
+}
+
+::-webkit-scrollbar-track {
+  border: 5px solid rgba(0, 0, 0, 0.055);
+  border-radius: 80px;
 }
