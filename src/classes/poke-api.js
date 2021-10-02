@@ -4,23 +4,32 @@ export class PokeAPI {
   static async getPokemon(id) {
     const cachedPokemons = BasicStorage.get("pokemons");
     const cachedPokemon = cachedPokemons.find((obj) => obj.pokemonID === id);
+    return cachedPokemon;
+  }
 
-    if (cachedPokemon) return cachedPokemon;
+  static async apiRequest() {
+    const responsePokemon = (id) => `https://pokeapi.co/api/v2/pokemon/${id}/`;
 
-    const responsePokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+    const generatePokemonPromises = () =>
+      Array(898)
+        .fill()
+        .map((_, index) => fetch(responsePokemon(index + 1)).then((response) => response.json()));
 
-    const data = await responsePokemon.json();
+    const pokemonPromises = generatePokemonPromises();
+    const cachedPokemons = BasicStorage.get("pokemons");
 
-    const { types, id: pokemonID, name, sprites } = data;
-    const { front_default, versions } = sprites;
-    const frontDefaultGenerationVI = versions["generation-vi"]["omegaruby-alphasapphire"].front_default;
+    await Promise.all(pokemonPromises).then((pokemons) => {
+      pokemons.forEach((actuallyPokemon) => {
+        const { types, id: pokemonID, name, sprites } = actuallyPokemon;
+        const { front_default, versions } = sprites;
+        const frontDefaultGenerationVI = versions["generation-vi"]["omegaruby-alphasapphire"].front_default;
 
-    const pokemon = { types, pokemonID, name, sprites: { front_default, frontDefaultGenerationVI } };
+        const pokemon = { types, pokemonID, name, sprites: { front_default, frontDefaultGenerationVI } };
 
-    cachedPokemons.push(pokemon);
+        cachedPokemons.push(pokemon);
 
-    BasicStorage.set("pokemons", cachedPokemons);
-
-    return pokemon;
+        BasicStorage.set("pokemons", cachedPokemons);
+      });
+    });
   }
 }
