@@ -39,10 +39,10 @@ export class SinglePageApplication {
   static infinityScrollListener() {
     let number = 26;
     window.addEventListener("scroll", async () => {
-      const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 350;
+      const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 250;
       if (isEndScroll) {
-        number += 4;
-        await HomeUI.fetchPokemons(number);
+        HomeUI.count >= HomeUI.maxPokemons ? (number = -1) : (number += 4);
+        await HomeUI.fetchPokemons(++number);
       }
     });
   }
