@@ -79,3 +79,14 @@
   border-radius: 5px;
   padding: 5px;
 }
+
+@media screen and (min-width: 600px) {
+  .pokemons-content {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+  }
+  a {
+    margin: 20px;
+  }
+}
