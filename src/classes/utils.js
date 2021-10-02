@@ -15,4 +15,9 @@ export class Utils {
     const types = pokemon.types.map((types) => types.type.name);
     return types;
   }
+
+  static getMaskedID(pokemon) {
+    const maskedPokemonID = pokemon.pokemonID.toString().padStart(3, "0");
+    return maskedPokemonID;
+  }
 }
