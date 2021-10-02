@@ -1,5 +1,6 @@
 import { ROUTES } from "../constants/ROUTES.js";
 import { $main } from "../script.js";
+import { HomeUI } from "../classes/home-ui.js";
 
 export class SinglePageApplication {
   static addHashListener() {
@@ -23,6 +24,7 @@ export class SinglePageApplication {
 
     $main.innerHTML = "";
     $main.appendChild(html);
+    HomeUI.homeDefaultFetch();
   }
 
   static addWindowLoadListener() {
