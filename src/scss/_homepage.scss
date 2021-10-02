@@ -1,0 +1,55 @@
+@import "mixins";
+:root {
+  --neutral-color: rgba(0, 0, 0, 0.15);
+}
+
+.pokemons-content {
+  padding: 20px;
+  @include flex-center(column);
+  font-family: "Jura", sans-serif;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    width: 220px;
+    height: 268px;
+    margin-bottom: 100px;
+
+    border-radius: 5px;
+
+    & div:only-child {
+      border-radius: 5px;
+      width: 220px;
+      box-shadow: 0px 0px 4px 4px var(--neutral-color);
+      transition: box-shadow 0.5s ease;
+      &:hover {
+        box-shadow: 0px 0px 10px 10px var(--neutral-color);
+      }
+    }
+
+    .poke-info {
+      font-weight: 700;
+      background-color: transparent;
+      display: flex;
+      flex-direction: column;
+      color: black;
+
+      img {
+        border-radius: 100%;
+        background-color: #5a5a5a00;
+        box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.027);
+        background-image: linear-gradient(315deg, #ffffff0e 0%, #ffffff4f 74%);
+        margin: 10px;
+      }
+
+      padding: 10px 25px 0px 25px;
+
+      .poke-name {
+        padding: 5px;
+        margin-bottom: 10px;
+        text-transform: capitalize;
+        background-color: transparent;
+      }
+    }
+  }
+}
