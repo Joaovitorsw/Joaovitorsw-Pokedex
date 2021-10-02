@@ -10,4 +10,9 @@ export class Utils {
     $type.innerText = pokeType.capitalize();
     $element.append($type);
   }
+
+  static getPokemonTypes(pokemon) {
+    const types = pokemon.types.map((types) => types.type.name);
+    return types;
+  }
 }
