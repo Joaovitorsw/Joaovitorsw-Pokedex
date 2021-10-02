@@ -1,0 +1,22 @@
+@import "homepage";
+@import "types";
+@import "mixins";
+
+html,
+main {
+  background-image: linear-gradient(
+    to right,
+    #f7f2ff,
+    #f3edff,
+    #efe9ff,
+    #eae4ff,
+    #e5e0ff,
+    #e2deff,
+    #deddff,
+    #dadbff,
+    #d7dcff,
+    #d4dcff,
+    #d1ddff,
+    #ceddff
+  );
+}
