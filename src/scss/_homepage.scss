@@ -53,3 +53,16 @@
     }
   }
 }
+.poke-types {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  align-items: center;
+  color: white;
+  flex-direction: row;
+  padding: 10px;
+  border-radius: 0px 0px 5px 5px;
+  span {
+    margin-left: 5px;
+  }
+}
