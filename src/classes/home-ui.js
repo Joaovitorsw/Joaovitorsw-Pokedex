@@ -5,11 +5,12 @@ import { $main } from "../script.js";
 
 export class HomeUI {
   static count = 1;
+  static maxPokemons = 152;
 
   static async fetchPokemons(value) {
     const $pokemonsContent = document.querySelector(".pokemons-content");
 
-    if (HomeUI.count >= 898) return;
+    if (HomeUI.count >= HomeUI.maxPokemons) return;
 
     for (HomeUI.count; HomeUI.count <= value; HomeUI.count++) {
       const $pokeCard = await HomeUI.createPokemonCard(HomeUI.count);
