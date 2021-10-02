@@ -1,6 +1,7 @@
 import { ROUTES } from "../constants/ROUTES.js";
 import { $main } from "../script.js";
 import { HomeUI } from "../classes/home-ui.js";
+import { BasicStorage } from "./basic-storage.js";
 
 export class SinglePageApplication {
   static addHashListener() {
@@ -24,9 +25,21 @@ export class SinglePageApplication {
 
     $main.innerHTML = "";
     $main.appendChild(html);
-    HomeUI.homeDefaultFetch();
+
+    SinglePageApplication.infinityScrollListener();
+    HomeUI.fetchPokemons(24);
   }
 
+  static infinityScrollListener() {
+    let number = 26;
+    window.addEventListener("scroll", async () => {
+      const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 350;
+      if (isEndScroll) {
+        number += 4;
+        await HomeUI.fetchPokemons(number);
+      }
+    });
+  }
   static addWindowLoadListener() {
     window.addEventListener("load", async () => {
       await SinglePageApplication.renderPage();
