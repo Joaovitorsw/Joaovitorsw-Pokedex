@@ -47,4 +47,9 @@ export class HomeUI {
 
     return $routerLink;
   }
+
+  static async homeDefaultFetch() {
+    HomeUI.count = 1;
+    await HomeUI.fetchPokemons(24);
+  }
 }
