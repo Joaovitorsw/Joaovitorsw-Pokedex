@@ -5,7 +5,7 @@ import { $main } from "../script.js";
 
 export class HomeUI {
   static count = 1;
-  static maxPokemons = 152;
+  static maxPokemons = 898;
 
   static async fetchPokemons(value) {
     const $pokemonsContent = document.querySelector(".pokemons-content");
