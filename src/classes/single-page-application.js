@@ -24,4 +24,11 @@ export class SinglePageApplication {
     $main.innerHTML = "";
     $main.appendChild(html);
   }
+
+  static addWindowLoadListener() {
+    window.addEventListener("load", async () => {
+      await SinglePageApplication.renderPage();
+      SinglePageApplication.addHashListener();
+    });
+  }
 }
