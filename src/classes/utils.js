@@ -24,4 +24,9 @@ export class Utils {
     const spriteVersionUrl = pokemon.pokemonID > 721 ? pokemon.sprites.front_default : pokemon.sprites.frontDefaultGenerationVI;
     return spriteVersionUrl;
   }
+  static getFirstType(pokemon) {
+    const [firstType] = pokemon.types;
+    const firstTypeName = firstType.type.name;
+    return firstTypeName;
+  }
 }
