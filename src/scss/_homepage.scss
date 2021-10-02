@@ -66,3 +66,16 @@
     margin-left: 5px;
   }
 }
+
+.poke-number,
+.poke-name,
+.poke-types {
+  margin: 5px 0px;
+  align-self: center;
+}
+.poke-info,
+.poke-number,
+.poke-types span {
+  border-radius: 5px;
+  padding: 5px;
+}
