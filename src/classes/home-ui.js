@@ -57,12 +57,8 @@ export class HomeUI {
     const $loadingScreen = LoadingScreen.createContent();
     $main.appendChild($loadingScreen);
     document.documentElement.classList.add("loading");
-    const $content = document.querySelector(".loader");
-    for (let index = 1; index <= 898; index++) {
-      await PokeAPI.getPokemon(index);
-    }
-
-    $main.removeChild($content);
+    await PokeAPI.apiRequest();
+    $main.removeChild($loadingScreen);
     document.documentElement.classList.remove("loading");
   }
 }
