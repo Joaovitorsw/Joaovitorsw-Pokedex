@@ -1,11 +1,15 @@
+import { LoadingScreen } from "./loading-screen.js";
 import { PokeAPI } from "./poke-api.js";
 import { Utils } from "./utils.js";
+import { $main } from "../script.js";
 
 export class HomeUI {
   static count = 1;
 
   static async fetchPokemons(value) {
     const $pokemonsContent = document.querySelector(".pokemons-content");
+
+    if (HomeUI.count >= 898) return;
 
     for (HomeUI.count; HomeUI.count <= value; HomeUI.count++) {
       const $pokeCard = await HomeUI.createPokemonCard(HomeUI.count);
@@ -48,8 +52,16 @@ export class HomeUI {
     return $routerLink;
   }
 
-  static async homeDefaultFetch() {
-    HomeUI.count = 1;
-    await HomeUI.fetchPokemons(24);
+  static async createCache() {
+    const $loadingScreen = LoadingScreen.createContent();
+    $main.appendChild($loadingScreen);
+    document.documentElement.classList.add("loading");
+    const $content = document.querySelector(".loader");
+    for (let index = 1; index <= 898; index++) {
+      await PokeAPI.getPokemon(index);
+    }
+
+    $main.removeChild($content);
+    document.documentElement.classList.remove("loading");
   }
 }
