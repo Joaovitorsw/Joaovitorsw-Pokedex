@@ -1,5 +1,24 @@
 {
+  "name": "Joaovitorsw-Pokedex",
+  "version": "1.0.2",
+  "description": "Pokedex using JavaScript",
+  "scripts": {
+    "start": "parcel ./src/index.html --open",
+    "build": "parcel build ./src/index.html --detailed-report"
+  },
+  "keywords": [
+    "pokedex",
+    "javascript"
+  ],
+  "author": "João Vitor Pereira dos Santos",
+  "license": "ISC",
   "dependencies": {
+    "@parcel/transformer-svg": "^2.0.0-nightly.2430",
     "parcel": "^2.0.0-rc.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-image": "^2.0.0-rc.0",
+    "@parcel/transformer-sass": "^2.0.0-rc.0",
+    "live-server": "^1.2.1"
   }
 }
