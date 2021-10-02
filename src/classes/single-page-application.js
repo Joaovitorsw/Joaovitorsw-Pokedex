@@ -27,7 +27,13 @@ export class SinglePageApplication {
     $main.appendChild(html);
 
     SinglePageApplication.infinityScrollListener();
+    SinglePageApplication.firstLoading();
     HomeUI.fetchPokemons(24);
+  }
+
+  static firstLoading() {
+    const cachedPokemons = BasicStorage.get("pokemons");
+    if (cachedPokemons.length < 898) HomeUI.createCache();
   }
 
   static infinityScrollListener() {
