@@ -12,7 +12,7 @@ export async function HomePage() {
            <div class="select-box">
             <div class="options-container">
               <div class="option">
-                <input type="radio" class="radio" value="0:898" />
+                <input type="radio" class="radio" value="" />
                 <label for="None">Filter by Generation</label>
               </div>
               <div class="option">
