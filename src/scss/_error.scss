@@ -2,6 +2,7 @@
 .error {
   @include flex-center(column);
   align-items: center;
+  margin-bottom: 350px;
 
   font-family: "Jura", sans-serif;
   h1 {
