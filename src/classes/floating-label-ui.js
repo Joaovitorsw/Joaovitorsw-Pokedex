@@ -1,4 +1,3 @@
-import { BasicStorage } from "./basic-storage.js";
 import { HomeUI } from "./home-ui.js";
 import { Utils } from "./utils.js";
 
@@ -6,6 +5,7 @@ export class FloatingLabelUI {
   static $homePage;
   static $searchInput;
   static $searchLabel;
+  static searchPokemonArray;
 
   static FloatingLabelUI() {
     FloatingLabelUI.$homePage = document.querySelector(".homepage");
@@ -15,33 +15,21 @@ export class FloatingLabelUI {
   }
 
   static inputEventListener() {
-    FloatingLabelUI.$searchInput.addEventListener("change", () => FloatingLabelUI.hasValue());
-    FloatingLabelUI.$searchInput.addEventListener(
-      "input",
-      FloatingLabelUI.debounceEvent(async () => {
-        const pokemonsArray = BasicStorage.get("pokemons");
-        const userText = FloatingLabelUI.$searchInput.value.toLowerCase();
-        const hasValue = (obj) => obj.indexOf(userText) > -1;
+    FloatingLabelUI.$searchInput.addEventListener("change", FloatingLabelUI.hasValue);
+    FloatingLabelUI.$searchInput.addEventListener("input", FloatingLabelUI.debounceEvent(FloatingLabelUI.updatePokemon, 800));
+  }
 
-        const searchArray = pokemonsArray.filter((obj) => hasValue(obj.name));
-        const clearFn = searchArray.length === 0 ? HomeUI.noPokemonsFound : HomeUI.clearPokemons;
+  static async updatePokemon() {
+    const userText = FloatingLabelUI.$searchInput.value.toLowerCase();
+    const searchPokemon = (pokemon) => pokemon.indexOf(userText) > -1;
+    FloatingLabelUI.searchPokemonArray = HomeUI.pokemonArrays.filter((pokemon) => searchPokemon(pokemon.name));
+    const clearFn = FloatingLabelUI.searchPokemonArray.length === 0 ? HomeUI.noPokemonsFound : HomeUI.clearPokemons;
 
-        clearFn();
+    clearFn();
 
-        if (userText !== "") {
-          searchArray.forEach(async (pokemon) => {
-            const $pokeCard = await HomeUI.createPokemonCard(pokemon.pokemonID);
-            HomeUI.$pokemonsContent.append($pokeCard);
-          });
-        } else {
-          for (let id = 1; id <= HomeUI.count; id++) {
-            HomeUI.searchIsEmpty = true;
-            const $pokeCard = await HomeUI.createPokemonCard(id);
-            HomeUI.$pokemonsContent.append($pokeCard);
-          }
-        }
-      }, 800)
-    );
+    HomeUI.createPokemons(FloatingLabelUI.searchPokemonArray);
+
+    if (userText === "") HomeUI.searchIsEmpty = true;
   }
 
   static debounceEvent(callback, timeout) {
@@ -59,6 +47,6 @@ export class FloatingLabelUI {
     const inputValue = FloatingLabelUI.$searchInput.value;
     const hasValueInput = inputValue !== "";
     const classFn = hasValueInput ? Utils.elementClassAdd : Utils.elementClassRemove;
-    classFn(this.$searchLabel, "active");
+    classFn(FloatingLabelUI.$searchLabel, "active");
   }
 }
