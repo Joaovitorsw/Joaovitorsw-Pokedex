@@ -12,4 +12,15 @@ export class FloatingLabelUI {
     FloatingLabelUI.$searchInput = document.querySelector(".search-bar-input");
     FloatingLabelUI.$searchLabel = document.querySelector(".search-bar-label");
   }
+
+  static debounceEvent(callback, timeout) {
+    let timer;
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        callback();
+      }, timeout);
+    };
+  }
 }
