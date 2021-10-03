@@ -2,6 +2,7 @@ import { ROUTES } from "../constants/ROUTES.js";
 import { $main } from "../script.js";
 import { HomeUI } from "../classes/home-ui.js";
 import { BasicStorage } from "./basic-storage.js";
+import { FloatingLabelUI } from "./floating-label-ui.js";
 
 export class SinglePageApplication {
   static addHashListener() {
@@ -28,6 +29,8 @@ export class SinglePageApplication {
 
     SinglePageApplication.infinityScrollListener();
     await SinglePageApplication.firstLoading();
+
+    FloatingLabelUI.FloatingLabelUI();
     HomeUI.fetchPokemons(24);
   }
 
@@ -38,11 +41,14 @@ export class SinglePageApplication {
 
   static infinityScrollListener() {
     let number = 26;
+
     window.addEventListener("scroll", async () => {
-      const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 250;
-      if (isEndScroll) {
-        HomeUI.count >= HomeUI.maxPokemons ? (number = -1) : (number += 4);
-        await HomeUI.fetchPokemons(++number);
+      if (HomeUI.searchIsEmpty) {
+        const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 550;
+        if (isEndScroll) {
+          HomeUI.count >= HomeUI.maxPokemons ? (number = -1) : (number += 4);
+          await HomeUI.fetchPokemons(++number);
+        }
       }
     });
   }
