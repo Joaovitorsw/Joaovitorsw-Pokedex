@@ -20,6 +20,17 @@ export class HomeUI {
     }
   }
 
+  static noPokemonsFound() {
+    HomeUI.clearPokemons();
+    const $errorCard = Utils.createElementWithClass("div", "error");
+    $errorCard.innerHTML = `   
+            <h1>sorry</h1>
+            <img />
+            <p>Pokemon not found</p>
+            `;
+    HomeUI.$pokemonsContent.append($errorCard);
+  }
+
   static clearPokemons() {
     HomeUI.searchIsEmpty = false;
     HomeUI.$pokemonsContent.innerHTML = "";
