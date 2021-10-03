@@ -4,6 +4,7 @@
 @import "types";
 @import "mixins";
 @import "loading";
+@import "menu";
 
 html,
 main {
@@ -23,6 +24,7 @@ main {
     #ceddff
   );
   animation: fade 0.5s;
+  overflow-y: scroll;
 }
 html.loading {
   overflow: hidden;
