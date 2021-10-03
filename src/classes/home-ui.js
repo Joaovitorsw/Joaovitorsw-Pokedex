@@ -16,6 +16,7 @@ export class HomeUI {
 
     for (HomeUI.count; HomeUI.count <= value; HomeUI.count++) {
       const $pokeCard = await HomeUI.createPokemonCard(HomeUI.count);
+      Utils.fadeIn($pokeCard);
       HomeUI.$pokemonsContent.append($pokeCard);
     }
   }
@@ -28,6 +29,7 @@ export class HomeUI {
             <img />
             <p>Pokemon not found</p>
             `;
+    Utils.fadeIn($errorCard);
     HomeUI.$pokemonsContent.append($errorCard);
   }
 
