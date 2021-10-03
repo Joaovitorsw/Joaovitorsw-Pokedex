@@ -23,4 +23,11 @@ export class FloatingLabelUI {
       }, timeout);
     };
   }
+
+  static hasValue() {
+    const inputValue = FloatingLabelUI.$searchInput.value;
+    const hasValueInput = inputValue !== "";
+    const classFn = hasValueInput ? Utils.elementClassAdd : Utils.elementClassRemove;
+    classFn(this.$searchLabel, "active");
+  }
 }
