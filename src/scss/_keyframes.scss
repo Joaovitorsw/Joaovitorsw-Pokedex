@@ -44,17 +44,45 @@
   }
 }
 
-@keyframes capturing {
-  0%,
-  90% {
-    transform: rotate(0deg) translatex(0);
+@keyframes blink {
+  from {
+    background: #eee;
   }
-  20%,
-  80% {
-    transform: rotate(12deg) translatex(1px);
+  to {
+    background: #e74c3c;
   }
-  50%,
+}
+@keyframes shake {
+  0% {
+    transform: translate(0, 0) rotate(0) scale(0.3);
+  }
+  20% {
+    transform: translate(-10px, 0) rotate(-20deg) scale(0.3);
+  }
+  30% {
+    transform: translate(10px, 0) rotate(20deg) scale(0.3);
+  }
+  50% {
+    transform: translate(-10px, 0) rotate(-10deg) scale(0.3);
+  }
+  60% {
+    transform: translate(10px, 0) rotate(10deg) scale(0.3);
+  }
   100% {
-    transform: rotate(-12deg) translatex(-2px);
+    transform: translate(0, 0) rotate(0) scale(0.3);
+  }
+}
+@keyframes fall {
+  0% {
+    top: -200px;
+  }
+  60% {
+    top: 0;
+  }
+  80% {
+    top: -20px;
+  }
+  100% {
+    top: 0;
   }
 }
