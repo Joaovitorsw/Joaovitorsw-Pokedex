@@ -3,6 +3,7 @@ import { $main } from "../script.js";
 import { HomeUI } from "../classes/home-ui.js";
 import { BasicStorage } from "./basic-storage.js";
 import { FloatingLabelUI } from "./floating-label-ui.js";
+import { MenuUI } from "./menu-ui.js";
 
 export class SinglePageApplication {
   static addHashListener() {
@@ -29,8 +30,15 @@ export class SinglePageApplication {
 
     SinglePageApplication.infinityScrollListener();
     await SinglePageApplication.firstLoading();
+    SinglePageApplication.homePage();
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+  }
 
+  static homePage() {
     FloatingLabelUI.FloatingLabelUI();
+    MenuUI.menuUI();
     HomeUI.fetchPokemons(24);
   }
 
@@ -41,7 +49,6 @@ export class SinglePageApplication {
 
   static infinityScrollListener() {
     let number = 26;
-
     window.addEventListener("scroll", async () => {
       if (HomeUI.searchIsEmpty) {
         const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 550;
@@ -52,6 +59,7 @@ export class SinglePageApplication {
       }
     });
   }
+
   static addWindowLoadListener() {
     window.addEventListener("load", async () => {
       await SinglePageApplication.renderPage();
