@@ -1,6 +1,7 @@
 import { BasicStorage } from "./basic-storage.js";
 import { FloatingLabelUI } from "./floating-label-ui.js";
 import { HomeUI } from "./home-ui.js";
+import { Utils } from "./utils.js";
 
 export class MenuUI {
   static $selectBox;
@@ -34,6 +35,17 @@ export class MenuUI {
         FloatingLabelUI.updatePokemon();
         HomeUI.searchIsEmpty = false;
         MenuUI.$selectItem.innerText = generation;
+
+        if (generationRange[0] === "") {
+          HomeUI.clearPokemons();
+          HomeUI.searchIsEmpty = true;
+          for (let index = 1; index <= HomeUI.count; index++) {
+            HomeUI.createPokemonCard(index).then(($pokemon) => {
+              Utils.fadeIn($pokemon);
+              HomeUI.$pokemonsContent.append($pokemon);
+            });
+          }
+        }
       });
     });
   }
