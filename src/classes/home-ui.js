@@ -2,23 +2,36 @@ import { LoadingScreen } from "./loading-screen.js";
 import { PokeAPI } from "./poke-api.js";
 import { Utils } from "./utils.js";
 import { $main } from "../script.js";
+import { BasicStorage } from "./basic-storage.js";
+import { FloatingLabelUI } from "./floating-label-ui.js";
 
 export class HomeUI {
   static count = 1;
   static maxPokemons = 898;
   static $pokemonsContent;
   static searchIsEmpty = true;
+  static pokemonArrays;
 
   static async fetchPokemons(value) {
     if (HomeUI.count >= HomeUI.maxPokemons) return;
 
     HomeUI.$pokemonsContent = document.querySelector(".pokemons-content");
+    HomeUI.pokemonArrays = BasicStorage.get("pokemons");
+    FloatingLabelUI.searchPokemonArray = HomeUI.pokemonArrays;
 
     for (HomeUI.count; HomeUI.count <= value; HomeUI.count++) {
       const $pokeCard = await HomeUI.createPokemonCard(HomeUI.count);
       Utils.fadeIn($pokeCard);
       HomeUI.$pokemonsContent.append($pokeCard);
     }
+  }
+
+  static createPokemons(array) {
+    array.forEach(async (pokemon) => {
+      const $pokeCard = await HomeUI.createPokemonCard(pokemon.pokemonID);
+      Utils.fadeIn($pokeCard);
+      HomeUI.$pokemonsContent.append($pokeCard);
+    });
   }
 
   static noPokemonsFound() {
