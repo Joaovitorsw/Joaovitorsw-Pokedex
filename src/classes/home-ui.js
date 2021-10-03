@@ -15,10 +15,13 @@ export class HomeUI {
   static async fetchPokemons(value) {
     if (HomeUI.count >= HomeUI.maxPokemons) return;
 
-    HomeUI.$pokemonsContent = document.querySelector(".pokemons-content");
     HomeUI.pokemonArrays = BasicStorage.get("pokemons");
     FloatingLabelUI.searchPokemonArray = HomeUI.pokemonArrays;
+    HomeUI.createPokemonsFor(value);
+  }
 
+  static async createPokemonsFor(value) {
+    HomeUI.$pokemonsContent = document.querySelector(".pokemons-content");
     for (HomeUI.count; HomeUI.count <= value; HomeUI.count++) {
       const $pokeCard = await HomeUI.createPokemonCard(HomeUI.count);
       Utils.fadeIn($pokeCard);
@@ -26,7 +29,7 @@ export class HomeUI {
     }
   }
 
-  static createPokemons(array) {
+  static createPokemonsForEach(array) {
     array.forEach(async (pokemon) => {
       const $pokeCard = await HomeUI.createPokemonCard(pokemon.pokemonID);
       Utils.fadeIn($pokeCard);
