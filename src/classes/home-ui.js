@@ -6,16 +6,23 @@ import { $main } from "../script.js";
 export class HomeUI {
   static count = 1;
   static maxPokemons = 898;
+  static $pokemonsContent;
+  static searchIsEmpty = true;
 
   static async fetchPokemons(value) {
-    const $pokemonsContent = document.querySelector(".pokemons-content");
-
     if (HomeUI.count >= HomeUI.maxPokemons) return;
+
+    HomeUI.$pokemonsContent = document.querySelector(".pokemons-content");
 
     for (HomeUI.count; HomeUI.count <= value; HomeUI.count++) {
       const $pokeCard = await HomeUI.createPokemonCard(HomeUI.count);
-      $pokemonsContent.append($pokeCard);
+      HomeUI.$pokemonsContent.append($pokeCard);
     }
+  }
+
+  static clearPokemons() {
+    HomeUI.searchIsEmpty = false;
+    HomeUI.$pokemonsContent.innerHTML = "";
   }
 
   static async createPokemonCard(id) {
@@ -58,7 +65,10 @@ export class HomeUI {
     $main.appendChild($loadingScreen);
     document.documentElement.classList.add("loading");
     await PokeAPI.apiRequest();
-    $main.removeChild($loadingScreen);
-    document.documentElement.classList.remove("loading");
+    $loadingScreen.classList.add("fade");
+    setTimeout(() => {
+      document.documentElement.classList.remove("loading");
+      $main.removeChild($loadingScreen);
+    }, 500);
   }
 }
