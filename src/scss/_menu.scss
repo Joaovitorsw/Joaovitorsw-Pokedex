@@ -1,0 +1,106 @@
+:root {
+  --white-color: #ffff;
+  --white-color-dark: #00000015;
+  --black-color: black;
+  --background-color: white;
+}
+
+.options-container,
+.selected,
+.option,
+.option:hover,
+.select-box {
+  border-radius: 8px;
+  z-index: 2;
+}
+.selected,
+.option,
+.select-box label {
+  z-index: 2;
+  cursor: pointer;
+}
+
+.select-box {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white-color);
+  width: 100%;
+  max-width: 195px;
+  max-height: 40px;
+  margin-top: 38px;
+  font-size: 14px;
+}
+.selected {
+  width: 100%;
+  max-height: 30px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  position: relative;
+  outline: none;
+  padding: 20px;
+  margin-right: 20px;
+  order: 0;
+  background-color: var(--white-color);
+
+  h1 {
+    position: relative;
+    bottom: 7px;
+  }
+
+  &::after {
+    content: "";
+    background: url(../assets/images/icon-arrow-down.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    padding: 4px;
+    top: 45%;
+    right: 20px;
+    transition: transform 0.4s ease;
+  }
+  &:hover {
+    background-color: var(--white-color-dark);
+  }
+}
+
+.options-container.active + .selected::after {
+  transform: rotateX(180deg);
+  top: 17px;
+}
+
+.option {
+  padding: 15px 20px;
+  transition: transform 0.2s ease;
+  transform: scale(1);
+  background-color: var(--white-color);
+
+  & .radio {
+    display: none;
+  }
+  &:hover {
+    transform: scale(0.95);
+    background-color: var(--white-color-dark);
+  }
+}
+
+.options-container {
+  visibility: hidden;
+  max-height: 0;
+  opacity: 0;
+  order: 1;
+  width: 100%;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+
+  &.active {
+    background-color: var(--white-color);
+    visibility: visible;
+    max-height: 400px;
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 600px) {
+  .select-box {
+    margin-top: 15px;
+  }
+}
