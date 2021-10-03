@@ -22,9 +22,11 @@ export class FloatingLabelUI {
         const pokemonsArray = BasicStorage.get("pokemons");
         const userText = FloatingLabelUI.$searchInput.value.toLowerCase();
         const hasValue = (obj) => obj.indexOf(userText) > -1;
-        const searchArray = pokemonsArray.filter((obj) => hasValue(obj.name));
 
-        HomeUI.clearPokemons();
+        const searchArray = pokemonsArray.filter((obj) => hasValue(obj.name));
+        const clearFn = searchArray.length === 0 ? HomeUI.noPokemonsFound : HomeUI.clearPokemons;
+
+        clearFn();
 
         if (userText !== "") {
           searchArray.forEach(async (pokemon) => {
