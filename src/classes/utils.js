@@ -29,6 +29,14 @@ export class Utils {
     const firstTypeName = firstType.type.name;
     return firstTypeName;
   }
+
+  static elementClassAdd($element, status) {
+    $element.classList.add(status);
+  }
+
+  static elementClassRemove($element, status) {
+    $element.classList.remove(status);
+  }
 }
 String.prototype.capitalize = function (string) {
   return `${this[0].toUpperCase()}${this.slice(1)}`;
