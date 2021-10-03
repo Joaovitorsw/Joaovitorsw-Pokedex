@@ -22,9 +22,14 @@ main {
     #d1ddff,
     #ceddff
   );
+  animation: fade 0.5s;
 }
 html.loading {
   overflow: hidden;
+}
+
+.fade {
+  animation: fade 1.5s;
 }
 
 ::-webkit-scrollbar {
