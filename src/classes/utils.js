@@ -37,6 +37,13 @@ export class Utils {
   static elementClassRemove($element, status) {
     $element.classList.remove(status);
   }
+
+  static fadeIn($element) {
+    $element.classList.add("fade");
+    setTimeout(() => {
+      $element.classList.remove("fade");
+    }, 2000);
+  }
 }
 String.prototype.capitalize = function (string) {
   return `${this[0].toUpperCase()}${this.slice(1)}`;
