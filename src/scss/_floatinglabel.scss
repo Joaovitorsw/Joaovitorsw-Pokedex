@@ -16,3 +16,14 @@
   color: var(--black-color);
   background-color: white;
 }
+.search-bar-icon {
+  margin-left: 15px;
+  margin-right: 10px;
+  width: 15px;
+  content: url(../assets/images/search-bar-icon.svg);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.search-bar-icon:hover {
+  transform: scale(1.3);
+}
