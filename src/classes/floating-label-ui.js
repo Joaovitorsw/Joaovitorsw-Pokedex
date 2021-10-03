@@ -27,7 +27,7 @@ export class FloatingLabelUI {
 
     clearFn();
 
-    HomeUI.createPokemons(FloatingLabelUI.searchPokemonArray);
+    HomeUI.createPokemonsForEach(FloatingLabelUI.searchPokemonArray);
 
     if (userText === "") HomeUI.searchIsEmpty = true;
   }
