@@ -1,7 +1,9 @@
+@import "keyframes";
+
 .loader {
   width: 100vw;
   height: 100%;
-  background-color: rgba(253, 215, 0, 0.842);
+  background-color: rgb(253, 215, 0);
   position: absolute;
   top: 0;
   left: 0;
@@ -9,6 +11,12 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  opacity: 1;
+  transition: opacity 2s;
+
+  &.fade {
+    opacity: 0;
+  }
 }
 
 .pokeball {
@@ -76,20 +84,4 @@
   bottom: 17px;
   right: 17px;
   z-index: 1;
-}
-
-/* AnimationFrames */
-@keyframes capturing {
-  0%,
-  90% {
-    transform: rotate(0deg) translatex(0);
-  }
-  20%,
-  80% {
-    transform: rotate(12deg) translatex(1px);
-  }
-  50%,
-  100% {
-    transform: rotate(-12deg) translatex(-2px);
-  }
 }
