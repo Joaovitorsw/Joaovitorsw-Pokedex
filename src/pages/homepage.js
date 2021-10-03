@@ -6,7 +6,7 @@ export async function HomePage() {
           <div class="search-bar">
             <img class="search-bar-icon" alt="search-bar-icon" />
             <input class="search-bar-input" type="text" />
-            <label class="search-bar-label"">Search for pokemon...</label>
+            <label class="search-bar-label">Search for pokemon...</label>
           </div>`;
   const $pokemonsContent = Utils.createElementWithClass("div", "pokemons-content");
   $homepage.append($pokemonsContent);
