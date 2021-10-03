@@ -1,17 +1,19 @@
 @import "error";
 
 .navigation-content {
-  padding: 20px;
+  padding: 10px 75px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   user-select: none;
   font-family: "Jura", sans-serif;
 }
 
 .search-bar {
+  margin-top: 35px;
   display: flex;
   align-items: center;
   position: relative;
+
   border-radius: 5px;
   box-shadow: 0px 0px 4px 0px black;
   background-color: var(--white-color);
@@ -57,4 +59,14 @@
   font-size: 8px;
   top: 0;
   transform: translateY(45%);
+}
+@media screen and (max-width: 600px) {
+  .navigation-content {
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+  }
+  .search-bar {
+    max-width: 190px;
+  }
 }
