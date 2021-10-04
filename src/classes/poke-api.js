@@ -32,4 +32,24 @@ export class PokeAPI {
       });
     });
   }
+
+  static async getPokemonDetailsByID(id) {
+    const cacheKey = `pokemon-${id}`;
+
+    const cachedPokemon = BasicStorage.getById(cacheKey);
+
+    if (cachedPokemon) return cachedPokemon;
+
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+
+    const pokemon = await response.json();
+
+    const { abilities, stats, moves, height, weight } = pokemon;
+
+    const pokemonDetails = { abilities, stats, moves, height, weight };
+
+    BasicStorage.set(cacheKey, pokemonDetails);
+
+    return pokemonDetails;
+  }
 }
