@@ -52,4 +52,19 @@ export class PokeAPI {
 
     return pokemonDetails;
   }
+  static async getEvolutionChain(id) {
+    const requestPokemonSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`);
+
+    const pokemonSpecies = await requestPokemonSpecies.json();
+
+    const requestEvolutionChain = await fetch(`${pokemonSpecies.evolution_chain.url}`);
+
+    return requestEvolutionChain.json();
+  }
+
+  static async getMove(id) {
+    const requestMove = await fetch(`https://pokeapi.co/api/v2/move/${id}/`);
+
+    return requestMove.json();
+  }
 }
