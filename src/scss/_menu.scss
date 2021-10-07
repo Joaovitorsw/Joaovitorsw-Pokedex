@@ -10,7 +10,7 @@
 .option,
 .option:hover,
 .select-box {
-  border-radius: 8px;
+  border-radius: 5px;
   z-index: 2;
 }
 .selected,
@@ -19,32 +19,28 @@
   z-index: 2;
   cursor: pointer;
 }
-
 .select-box {
+  margin-top: 34px;
+  border: 1px solid #000;
   display: flex;
   flex-direction: column;
   background-color: var(--white-color);
-  width: 100%;
-  max-width: 195px;
-  max-height: 40px;
-  margin-top: 38px;
-  font-size: 14px;
+  max-width: 200px;
+  max-height: 42px;
 }
 .selected {
   width: 100%;
   max-height: 30px;
-  border-radius: 8px;
-  margin-bottom: 12px;
   position: relative;
   outline: none;
   padding: 20px;
-  margin-right: 20px;
+  margin-bottom: 10px;
   order: 0;
-  background-color: var(--white-color);
 
   h1 {
     position: relative;
     bottom: 7px;
+    right: 10px;
   }
 
   &::after {
@@ -55,8 +51,8 @@
     background-position: center;
     position: absolute;
     padding: 4px;
-    top: 45%;
-    right: 20px;
+    top: 48%;
+    right: 15px;
     transition: transform 0.4s ease;
   }
   &:hover {
@@ -95,11 +91,12 @@
   &.active {
     background-color: var(--white-color);
     visibility: visible;
-    max-height: 400px;
+    max-height: 420px;
+    border: 1px solid #000;
     opacity: 1;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 550px) {
   .select-box {
     margin-top: 15px;
   }
