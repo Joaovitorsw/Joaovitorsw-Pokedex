@@ -1,4 +1,9 @@
+import { POKE_KEYS } from "../constants/POKE_KEYS.js";
 import { PokeAPI } from "./poke-api.js";
+import { PokemonAbout } from "./pokemon-about.js";
+import { PokemonBaseStats } from "./pokemon-base-stats.js";
+import { PokemonEvolution } from "./pokemon-evolution.js";
+import { PokemonMoves } from "./pokemon-moves.js";
 import { Utils } from "./utils.js";
 
 export class PokemonDetails {
@@ -92,5 +97,19 @@ export class PokemonDetails {
     $tabsContent.append($tabs);
 
     return $tabsContent;
+  }
+  static async createTabs(data) {
+    const $tabs = Utils.createElementWithClass("div", "tabs-content");
+    const $aboutTab = PokemonAbout.createAboutTab(data);
+    const $baseStatsTab = PokemonBaseStats.createBaseStatsTab(data);
+    const $evolutionTab = await PokemonEvolution.createEvolutionTab(data);
+    const $movesTab = await PokemonMoves.createMovesTab(data);
+
+    $tabs.append($aboutTab);
+    $tabs.append($baseStatsTab);
+    $tabs.append($evolutionTab);
+    $tabs.append($movesTab);
+
+    return $tabs;
   }
 }
