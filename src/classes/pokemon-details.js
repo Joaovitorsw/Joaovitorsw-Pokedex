@@ -40,4 +40,39 @@ export class PokemonDetails {
 
     return $pokemonCard;
   }
+
+  static createDetails(data) {
+    const pokemon = data;
+    const { name } = data;
+    const firstTypeName = Utils.getFirstType(pokemon);
+    const $pokemonDetails = Utils.createElementWithClass("div", "pokemon-details", firstTypeName);
+    $pokemonDetails.id = "pokemon-details";
+    const $pokemonIdentifier = Utils.createElementWithClass("div", "pokemon-identifier");
+    const $pokemonImage = Utils.createElementWithClass("img", "pokemon-image");
+    const maskedPokemonID = Utils.getMaskedID(pokemon);
+    const spriteVersionUrl = Utils.getHomeSpritesUrl(pokemon);
+
+    $pokemonImage.setAttribute("src", spriteVersionUrl);
+    $pokemonImage.setAttribute("alt", `${name}-image`);
+    $pokemonImage.dataset.name = name;
+
+    $pokemonIdentifier.innerHTML = `
+    <div class="pokemon-identity">
+      <h1>${name}</h1> 
+      <div class="shiny-content">
+        <div class="shiny"></div>
+      </div>
+      <h2 class="${firstTypeName}">#${maskedPokemonID}</h2>
+    </div>
+    `;
+    const types = Utils.getPokemonTypes(pokemon);
+
+    types.forEach((pokeTypes) => Utils.appendPokemonType(pokeTypes, $pokemonIdentifier));
+
+    $pokemonDetails.append($pokemonIdentifier);
+
+    $pokemonDetails.append($pokemonImage);
+
+    return $pokemonDetails;
+  }
 }
