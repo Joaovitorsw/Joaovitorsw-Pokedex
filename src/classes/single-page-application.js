@@ -1,9 +1,10 @@
 import { ROUTES } from "../constants/ROUTES.js";
-import { $main } from "../script.js";
 import { HomeUI } from "../classes/home-ui.js";
 import { BasicStorage } from "./basic-storage.js";
 import { FloatingLabelUI } from "./floating-label-ui.js";
 import { MenuUI } from "./menu-ui.js";
+import { PokemonDetailsUI } from "./pokemon-details-ui.js";
+import { $main } from "../script.js";
 
 export class SinglePageApplication {
   static addHashListener() {
@@ -23,23 +24,32 @@ export class SinglePageApplication {
     const renderPageFn = ROUTES[fragment];
 
     const hasParam = !!param;
-    const html = hasParam ? await renderPageFn(param) : await renderPageFn();
+    const $html = hasParam ? await renderPageFn(param) : await renderPageFn();
 
     $main.innerHTML = "";
-    $main.appendChild(html);
+    $main.appendChild($html);
+    const isHome = $html.className === "homepage";
+    const addonsFn = isHome ? SinglePageApplication.homePage : SinglePageApplication.pokemonDetails;
 
-    SinglePageApplication.infinityScrollListener();
     await SinglePageApplication.firstLoading();
-    SinglePageApplication.homePage();
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 0);
+    addonsFn();
   }
 
   static homePage() {
-    FloatingLabelUI.FloatingLabelUI();
+    HomeUI.searchIsEmpty = true;
+    HomeUI.count = 1;
     MenuUI.menuUI();
+    FloatingLabelUI.FloatingLabelUI();
     HomeUI.fetchPokemons(24);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+    SinglePageApplication.infinityScrollListener();
+  }
+
+  static pokemonDetails() {
+    HomeUI.searchIsEmpty = false;
+    PokemonDetailsUI.UI();
   }
 
   static async firstLoading() {
@@ -51,7 +61,7 @@ export class SinglePageApplication {
     let number = 26;
     window.addEventListener("scroll", async () => {
       if (HomeUI.searchIsEmpty) {
-        const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 550;
+        const isEndScroll = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 600;
         if (isEndScroll) {
           HomeUI.count >= HomeUI.maxPokemons ? (number = -1) : (number += 4);
           await HomeUI.fetchPokemons(++number);
