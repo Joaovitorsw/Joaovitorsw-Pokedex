@@ -40,11 +40,11 @@ export async function HomePage() {
                 <label for="Oceania">Generation VI</label>
               </div>
                 <div class="option">
-                <input type="radio" class="radio" value="721:802" />
+                <input type="radio" class="radio" value="721:809" />
                 <label for="Oceania">Generation VII</label>
               </div>
                 <div class="option">
-                <input type="radio" class="radio" value="802:898" />
+                <input type="radio" class="radio" value="809:898" />
                 <label for="Oceania">Generation VIII</label>
               </div>
             </div>
