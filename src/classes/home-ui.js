@@ -1,7 +1,7 @@
 import { LoadingScreen } from "./loading-screen.js";
 import { PokeAPI } from "./poke-api.js";
 import { Utils } from "./utils.js";
-import { $main } from "../script.js";
+
 import { BasicStorage } from "./basic-storage.js";
 import { FloatingLabelUI } from "./floating-label-ui.js";
 
@@ -15,13 +15,13 @@ export class HomeUI {
   static async fetchPokemons(value) {
     if (HomeUI.count >= HomeUI.maxPokemons) return;
 
+    HomeUI.$pokemonsContent = document.querySelector(".pokemons-content");
     HomeUI.pokemonArrays = BasicStorage.get("pokemons");
     FloatingLabelUI.searchPokemonArray = HomeUI.pokemonArrays;
-    HomeUI.createPokemonsFor(value);
+    await HomeUI.createPokemonsFor(value);
   }
 
   static async createPokemonsFor(value) {
-    HomeUI.$pokemonsContent = document.querySelector(".pokemons-content");
     for (HomeUI.count; HomeUI.count <= value; HomeUI.count++) {
       const $pokeCard = await HomeUI.createPokemonCard(HomeUI.count);
       Utils.fadeIn($pokeCard);
@@ -39,6 +39,7 @@ export class HomeUI {
 
   static noPokemonsFound() {
     HomeUI.clearPokemons();
+    HomeUI.$pokemonsContent.classList.add("error");
     const $errorCard = Utils.createElementWithClass("div", "error");
     $errorCard.innerHTML = `   
             <h1>sorry</h1>
@@ -50,12 +51,14 @@ export class HomeUI {
   }
 
   static clearPokemons() {
+    HomeUI.$pokemonsContent.classList.remove("error");
     HomeUI.searchIsEmpty = false;
     HomeUI.$pokemonsContent.innerHTML = "";
   }
 
   static async createPokemonCard(id) {
     const pokemon = await PokeAPI.getPokemon(id);
+
     const { name: pokemonName } = pokemon;
 
     const maskedPokemonID = Utils.getMaskedID(pokemon);
@@ -90,14 +93,6 @@ export class HomeUI {
   }
 
   static async createCache() {
-    const $loadingScreen = LoadingScreen.createContent();
-    $main.appendChild($loadingScreen);
-    document.documentElement.classList.add("loading");
-    await PokeAPI.apiRequest();
-    $loadingScreen.classList.add("fade");
-    setTimeout(() => {
-      document.documentElement.classList.remove("loading");
-      $main.removeChild($loadingScreen);
-    }, 500);
+    await LoadingScreen.loadingScreen(PokeAPI.apiRequest, false);
   }
 }
