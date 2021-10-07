@@ -26,4 +26,18 @@ export class PokemonDetails {
 
     return $pokemonContent;
   }
+
+  static async createPokemonCard(data) {
+    const $pokemonCard = Utils.createElementWithClass("div", "pokemon-card");
+
+    const $pokemonDetails = PokemonDetails.createDetails(data);
+
+    const $InfoContent = await PokemonDetails.createMoreInfo(data);
+
+    $pokemonCard.append($pokemonDetails);
+
+    $pokemonCard.append($InfoContent);
+
+    return $pokemonCard;
+  }
 }
