@@ -41,4 +41,43 @@ export class PokemonDetailsUI {
       });
     }
   }
+  static shinyForm() {
+    const $shinyContent = document.querySelector(".shiny-content");
+
+    const $pokeImage = document.querySelector(".pokemon-image");
+    const $pokeFirstForm = document.querySelectorAll(".first-form img");
+    const $pokeSecondForm = document.querySelectorAll(".second-form img");
+
+    $shinyContent.addEventListener("click", shinyForm);
+
+    function shinyForm() {
+      $pokeImage.classList.toggle("shinyForm");
+
+      if ($pokeImage.className === "pokemon-image") {
+        $pokeImage.setAttribute("src", Utils.getPokeImageUrl($pokeImage.dataset.name));
+
+        $pokeFirstForm.forEach((img) => {
+          const pokemonName = img.dataset.name;
+          img.setAttribute("src", Utils.getPokeImageUrl(pokemonName));
+        });
+
+        $pokeSecondForm.forEach((img) => {
+          const pokemonName = img.dataset.name;
+          img.setAttribute("src", Utils.getPokeImageUrl(pokemonName));
+        });
+      } else {
+        $pokeImage.setAttribute("src", Utils.getPokeImageUrl($pokeImage.dataset.name, true));
+
+        $pokeFirstForm.forEach((img) => {
+          const pokemonName = img.dataset.name;
+          img.setAttribute("src", Utils.getPokeImageUrl(pokemonName, true));
+        });
+
+        $pokeSecondForm.forEach((img) => {
+          const pokemonName = img.dataset.name;
+          img.setAttribute("src", Utils.getPokeImageUrl(pokemonName, true));
+        });
+      }
+    }
+  }
 }
