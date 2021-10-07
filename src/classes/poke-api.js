@@ -33,14 +33,14 @@ export class PokeAPI {
     });
   }
 
-  static async getPokemonDetailsByID(id) {
-    const cacheKey = `pokemon-${id}`;
+  static async getPokemonsByName(name) {
+    const cacheKey = `pokemon-${name}`;
 
     const cachedPokemon = BasicStorage.getById(cacheKey);
 
     if (cachedPokemon) return cachedPokemon;
 
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
 
     const pokemon = await response.json();
 
@@ -62,9 +62,12 @@ export class PokeAPI {
     return requestEvolutionChain.json();
   }
 
-  static async getMove(id) {
-    const requestMove = await fetch(`https://pokeapi.co/api/v2/move/${id}/`);
+  static async getMove(array) {
+    const responsePokemon = (id) => `https://pokeapi.co/api/v2/move/${id}/`;
+    const generateMovesPromises = () =>
+      array.fill().map((_, index) => fetch(responsePokemon(index + 1)).then((response) => response.json()));
+    const moves = generateMovesPromises();
 
-    return requestMove.json();
+    return await Promise.all(moves);
   }
 }
