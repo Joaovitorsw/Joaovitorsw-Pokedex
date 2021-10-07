@@ -99,7 +99,7 @@ export class PokemonDetails {
     return $tabsContent;
   }
   static async createTabs(data) {
-    const $tabs = Utils.createElementWithClass("div", "tabs-content");
+    const $tabs = Utils.createElementWithClass("div", "tabs-card");
     const $aboutTab = PokemonAbout.createAboutTab(data);
     const $baseStatsTab = PokemonBaseStats.createBaseStatsTab(data);
     const $evolutionTab = await PokemonEvolution.createEvolutionTab(data);
