@@ -32,7 +32,7 @@ export class PokemonDetails {
 
     const $pokemonDetails = PokemonDetails.createDetails(data);
 
-    const $InfoContent = await PokemonDetails.createMoreInfo(data);
+    const $InfoContent = await PokemonDetails.createTabsContent(data);
 
     $pokemonCard.append($pokemonDetails);
 
@@ -74,5 +74,23 @@ export class PokemonDetails {
     $pokemonDetails.append($pokemonImage);
 
     return $pokemonDetails;
+  }
+
+  static async createTabsContent(data) {
+    const $tabsContent = Utils.createElementWithClass("div", "tabs-content");
+    const $tabs = await PokemonDetails.createTabs(data);
+
+    $tabsContent.innerHTML = `
+           <ul class="tabs-navigation">
+            <li class="tab-option active" data-value="0">About</li>
+            <li class="tab-option" data-value="1">Base Stats</li>
+            <li class="tab-option" data-value="2">Evolution</li>
+            <li class="tab-option" data-value="3">Moves</li>
+          </ul>
+        `;
+
+    $tabsContent.append($tabs);
+
+    return $tabsContent;
   }
 }
