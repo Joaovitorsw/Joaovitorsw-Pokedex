@@ -1,3 +1,5 @@
+import { POKE_KEYS } from "../constants/POKE_KEYS.js";
+
 export class Utils {
   static createElementWithClass(selector, ...className) {
     const $element = document.createElement(selector);
@@ -44,6 +46,25 @@ export class Utils {
       $element.classList.remove("fade");
     }, 2000);
   }
+
+  static getPokeImageUrl = (pokeName, isShine) => {
+    const pokemonID = POKE_KEYS[pokeName];
+    const shineUrl = isShine ? "shiny/" : "";
+    const urlVersion =
+      pokemonID > 721
+        ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${shineUrl}${pokemonID}.png`
+        : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vi/omegaruby-alphasapphire/${shineUrl}${pokemonID}.png`;
+
+    return urlVersion;
+  };
+
+  static nullToEmptyFn = (value) => {
+    return value === null ? "—" : value;
+  };
+
+  static undefinedToSpecialFn = (value) => {
+    return value === undefined ? "Special" : value;
+  };
 }
 String.prototype.capitalize = function (string) {
   return `${this[0].toUpperCase()}${this.slice(1)}`;
