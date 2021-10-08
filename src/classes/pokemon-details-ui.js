@@ -4,7 +4,6 @@ export class PokemonDetailsUI {
   static UI() {
     PokemonDetailsUI.tabsUI();
     PokemonDetailsUI.shinyForm();
-    PokemonDetailsUI.sortTable();
   }
 
   static tabsUI() {

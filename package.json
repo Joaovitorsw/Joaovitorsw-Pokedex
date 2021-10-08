@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Pokedex using JavaScript",
   "scripts": {
-    "start": "parcel ./src/index.html --open",
+    "start": "live-server ./src",
     "build": "parcel build ./src/index.html --detailed-report"
   },
   "keywords": [
