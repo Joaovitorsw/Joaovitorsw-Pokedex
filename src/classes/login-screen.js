@@ -87,4 +87,31 @@ export class LoginScreen {
     this.$loginForm.style.display = property1;
     this.$registerForm.style.display = property2;
   }
+
+  #loginScreenRecoveryElements() {
+    this.$exit = document.querySelector(".exit");
+    this.$loginScreen = document.querySelector(".login-screen");
+    this.$email = document.querySelector(`.${this.actuallyForm} input[type=text]`);
+    this.$password = document.querySelector(`.${this.actuallyForm} input[type=password]`);
+    this.$button = document.querySelector(`.${this.actuallyForm} button`);
+    this.#loginScreenEventListener();
+  }
+
+  #loginScreenEventListener() {
+    this.$exit.addEventListener("click", () => this.#removeLoginScreen());
+    this.$email.addEventListener(
+      "input",
+      Utils.debounceEvent(() => {
+        this.#isValid(this.$email);
+        this.#submitRemoveDisable();
+      }, 300)
+    );
+    this.$password.addEventListener(
+      "input",
+      Utils.debounceEvent(() => {
+        this.#isValid(this.$password);
+        this.#submitRemoveDisable();
+      }, 300)
+    );
+  }
 }
