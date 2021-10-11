@@ -117,3 +117,30 @@
     }
   }
 }
+.thumbnail {
+  background: #ef3a3a;
+  max-width: 150px;
+  max-height: 150px;
+  margin: 0 auto 30px;
+  padding: 50px 30px;
+  border-radius: 100%;
+  box-sizing: border-box;
+
+  img {
+    content: url(../assets/images/icons8-insignia-3-stars-96.png);
+    transform: translate(-0.5%, -25%);
+    display: block;
+    width: 100%;
+  }
+}
+
+.login-form,
+.register-form {
+  display: flex;
+  flex-direction: column;
+  animation: fade 1.5s;
+}
+
+.register-form {
+  display: none;
+}
