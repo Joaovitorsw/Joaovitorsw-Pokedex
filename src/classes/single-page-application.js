@@ -17,7 +17,7 @@ export class SinglePageApplication {
 
   static getTargetRoute(hash) {
     const hashIsEmpty = hash === "";
-    return hashIsEmpty ? "home" : hash.replace("#", "");
+    return hashIsEmpty ? "home" : hash.replace("?#", "");
   }
 
   static async renderPage() {
