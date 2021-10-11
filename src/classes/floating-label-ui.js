@@ -16,7 +16,7 @@ export class FloatingLabelUI {
 
   static inputEventListener() {
     FloatingLabelUI.$searchInput.addEventListener("change", FloatingLabelUI.hasValue);
-    FloatingLabelUI.$searchInput.addEventListener("input", FloatingLabelUI.debounceEvent(FloatingLabelUI.updatePokemon, 800));
+    FloatingLabelUI.$searchInput.addEventListener("input", Utils.debounceEvent(FloatingLabelUI.updatePokemon, 800));
   }
 
   static async updatePokemon() {
@@ -30,17 +30,6 @@ export class FloatingLabelUI {
     HomeUI.createPokemonsForEach(FloatingLabelUI.searchPokemonArray);
 
     if (userText === "") HomeUI.searchIsEmpty = true;
-  }
-
-  static debounceEvent(callback, timeout) {
-    let timer;
-
-    return () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        callback();
-      }, timeout);
-    };
   }
 
   static hasValue() {
