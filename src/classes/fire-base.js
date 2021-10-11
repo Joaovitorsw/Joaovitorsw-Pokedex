@@ -15,4 +15,17 @@ export class FireBase {
     };
     const defaultProject = initializeApp(firebaseConfig);
   }
+
+  static login(email, password) {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        alert("successful login");
+        FireBase.notConnected = false;
+      })
+      .catch((error) => {
+        FireBase.notConnected = true;
+        alert("Failed to login");
+      });
+  }
 }
