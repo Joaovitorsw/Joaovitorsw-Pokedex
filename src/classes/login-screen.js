@@ -132,4 +132,33 @@ export class LoginScreen {
     }
     this.userIsValid = this.emailIsValid && this.passwordIsValid;
   }
+
+  #submitRemoveDisable() {
+    if (this.firstListener) return;
+    if (this.userIsValid) {
+      const enterKey = 13;
+      this.$email.addEventListener("keyup", (keyEvent) => {
+        if (keyEvent.keyCode === enterKey) this.#submitButton();
+      });
+      this.$password.addEventListener("keyup", (keyEvent) => {
+        if (keyEvent.keyCode === enterKey) this.#submitButton();
+      });
+      this.$button.addEventListener("click", () => this.#submitButton());
+      this.firstListener = true;
+    }
+  }
+
+  #submitButton() {
+    const actuallyFn = this.actuallyForm === "login-form" ? FireBase.login : FireBase.register;
+    actuallyFn(this.email, this.password);
+    this.#removeLoginScreen();
+  }
+
+  #removeLoginScreen() {
+    this.$loginScreen.classList.add("fade-out");
+    setTimeout(() => {
+      this.$loginScreen.remove();
+      this.$html.classList.remove("login");
+    }, 500);
+  }
 }
