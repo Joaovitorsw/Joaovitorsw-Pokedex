@@ -5,8 +5,12 @@ import { FloatingLabelUI } from "./floating-label-ui.js";
 import { MenuUI } from "./menu-ui.js";
 import { PokemonDetailsUI } from "./pokemon-details-ui.js";
 import { $main } from "../script.js";
+import { FireBase } from "./fire-base.js";
+import { LoginScreen } from "./login-screen.js";
 
 export class SinglePageApplication {
+  static $loginScreen = new LoginScreen();
+
   static addHashListener() {
     window.addEventListener("hashchange", SinglePageApplication.renderPage);
   }
@@ -30,9 +34,9 @@ export class SinglePageApplication {
     $main.appendChild($html);
     const isHome = $html.className === "homepage";
     const addonsFn = isHome ? SinglePageApplication.homePage : SinglePageApplication.pokemonDetails;
-
     await SinglePageApplication.firstLoading();
     addonsFn();
+    if (FireBase.notConnected) SinglePageApplication.$loginScreen.show();
   }
 
   static homePage() {
