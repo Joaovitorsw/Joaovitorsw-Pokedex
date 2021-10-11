@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-rc.0",
-    "@parcel/transformer-sass": "^2.0.0-rc.0",
-    "live-server": "^1.2.1"
+    "@parcel/transformer-sass": "^2.0.0-rc.0"
   }
 }
