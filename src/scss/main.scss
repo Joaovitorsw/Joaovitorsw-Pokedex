@@ -5,6 +5,7 @@
 @import "types";
 @import "mixins";
 @import "loading";
+@import "loginscreen";
 @import "menu";
 
 #root {
@@ -35,7 +36,9 @@ main {
   );
   animation: fade 0.5s;
 }
-html.loading {
+html.loading,
+html.login,
+html.loading.login {
   overflow: hidden;
 }
 
@@ -55,11 +58,4 @@ html.loading {
 ::-webkit-scrollbar-track {
   border: 5px solid rgba(0, 0, 0, 0.055);
   border-radius: 80px;
-}
-
-@media screen and (min-width: 550px) {
-  html,
-  main {
-    overflow-y: scroll;
-  }
 }
