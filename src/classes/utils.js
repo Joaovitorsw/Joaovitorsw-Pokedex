@@ -47,6 +47,17 @@ export class Utils {
     }, 2000);
   }
 
+  static debounceEvent(callback, timeout) {
+    let timer;
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        callback();
+      }, timeout);
+    };
+  }
+
   static getPokeImageUrl = (pokeName, isShine) => {
     const pokemonID = POKE_KEYS[pokeName];
     const shineUrl = isShine ? "shiny/" : "";
