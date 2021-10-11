@@ -19,7 +19,7 @@ export class PokemonDetails {
 
     $pokemonContent.innerHTML = `
       <a href="/#"<button class="back">
-      <img alt="&larr;" class="arrow"/> 
+      <img alt="&larr;" class="arrow" crossorigin="anonymous"/> 
       Back
       </button>
       </a>
@@ -59,6 +59,7 @@ export class PokemonDetails {
 
     $pokemonImage.setAttribute("src", spriteVersionUrl);
     $pokemonImage.setAttribute("alt", `${name}-image`);
+    $pokemonImage.setAttribute("crossorigin", `anonymous`);
     $pokemonImage.dataset.name = name;
 
     $pokemonIdentifier.innerHTML = `

@@ -43,7 +43,7 @@ export class HomeUI {
     const $errorCard = Utils.createElementWithClass("div", "error");
     $errorCard.innerHTML = `   
             <h1>sorry</h1>
-            <img />
+            <img/>
             <p>Pokemon not found</p>
             `;
     Utils.fadeIn($errorCard);
@@ -80,7 +80,7 @@ export class HomeUI {
 
     $routerLink.href = `#details/${pokemonName}`;
     $pokeInfo.innerHTML = `  
-        <img src="${spriteVersionUrl}" alt="${pokemonName}" />
+        <img src="${spriteVersionUrl}" alt="${pokemonName}" crossorigin="anonymous"/>
         <h1 class="poke-number">#${maskedPokemonID}</h1>
         <h2 class="poke-name">${pokemonName}</h2>  
   `;

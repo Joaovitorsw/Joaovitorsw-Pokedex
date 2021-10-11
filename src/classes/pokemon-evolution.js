@@ -18,25 +18,37 @@ export class PokemonEvolution {
             <h1 class="evolution-title">Evolution Chain</h1>
             <div class="first-form">
              <a href="#details/${firstForm}">
-            <img src="${Utils.getPokeImageUrl(firstForm)}" alt="${firstForm}-image" data-name="${firstForm}">
+            <img src="${Utils.getPokeImageUrl(firstForm)}"
+            alt="${firstForm}-image" data-name="${firstForm}"
+            crossorigin="anonymous">
             </a>
              <span>Evolves to </span>
-             <a href="#details/${secondForm}">
-            <img src="${Utils.getPokeImageUrl(secondForm)}" alt="${secondForm}" data-name="${secondForm}"></a>          
+            <a href="#details/${secondForm}">
+             <img src="${Utils.getPokeImageUrl(secondForm)}"
+             alt="${secondForm}" 
+             data-name="${secondForm}"
+             crossorigin="anonymous">
+             </a>          
   `;
     }
 
     if (!!thirdForm) {
       $evolution.innerHTML += `
-                <div class="second-form">
-                <a href="#details/${secondForm}">
-            <img src="${Utils.getPokeImageUrl(secondForm)}" alt="${secondForm}" data-name="${secondForm}">
-            </a>
+             <div class="second-form">
+             <a href="#details/${secondForm}">
+             <img src="${Utils.getPokeImageUrl(secondForm)}"
+             alt="${secondForm}" 
+             data-name="${secondForm}"
+             crossorigin="anonymous">
+             </a>        
              <span>Evolves to</span>
              <a href="#details/${thirdForm}">
-            <img src="${Utils.getPokeImageUrl(thirdForm)}" alt="${thirdForm}" data-name="${thirdForm}">
-            </a>
-            </div>`;
+             <img src="${Utils.getPokeImageUrl(thirdForm)}" 
+             alt="${thirdForm}"
+             data-name="${thirdForm}"
+             crossorigin="anonymous">
+             </a>
+             </div>`;
     }
 
     if (EeveeEvolutions) {
@@ -45,13 +57,14 @@ export class PokemonEvolution {
         $evolution.innerHTML += `
             <div class="first-form">
              <a href="#details/${firstForm}">
-            <img src="${Utils.getPokeImageUrl(firstForm)}" alt="${firstForm}-image" data-name="${firstForm}">
+            <img src="${Utils.getPokeImageUrl(firstForm)}" alt="${firstForm}-image" data-name="${firstForm}" crossorigin="anonymous">
             </a>
              <span>Evolves to </span>
              <a href="#details/${evolution.species.name}">
             <img src="${Utils.getPokeImageUrl(evolution.species.name)}"
              alt="${evolution.species.name}" 
-             data-name="${evolution.species.name}">
+             data-name="${evolution.species.name}"
+             crossorigin="anonymous">
             </a>
             `;
       });
