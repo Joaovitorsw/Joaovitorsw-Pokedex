@@ -114,4 +114,22 @@ export class LoginScreen {
       }, 300)
     );
   }
+
+  #isValid($input) {
+    const $inputType = $input.getAttribute("type");
+    const mailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{9,16}$/;
+    const pattern = $inputType === "text" ? mailPattern : passwordPattern;
+
+    const isValid = pattern.test($input.value);
+    this.$button.disabled = true;
+    $input.classList.add("invalid");
+    if (isValid) {
+      $inputType === "text" ? (this.emailIsValid = true) : (this.passwordIsValid = true);
+      $inputType === "text" ? (this.email = $input.value) : (this.password = $input.value);
+      this.$button.disabled = false;
+      $input.classList.remove("invalid");
+    }
+    this.userIsValid = this.emailIsValid && this.passwordIsValid;
+  }
 }
