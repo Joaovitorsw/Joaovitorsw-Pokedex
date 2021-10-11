@@ -62,4 +62,29 @@ export class LoginScreen {
           `;
     return $loginScreen;
   }
+
+  #formSelector() {
+    this.$loginForm = document.querySelector(".login-form");
+    this.$registerForm = document.querySelector(".register-form");
+
+    const $loginHRef = this.$loginForm.querySelector("a");
+    const $registerHRef = this.$registerForm.querySelector("a");
+
+    $loginHRef.addEventListener("click", () => {
+      this.#changeForm("none", "flex");
+      this.actuallyForm = "register-form";
+      this.#loginScreenRecoveryElements();
+    });
+    $registerHRef.addEventListener("click", () => {
+      this.#changeForm("flex", "none");
+      this.actuallyForm = "login-form";
+      this.#loginScreenRecoveryElements();
+    });
+    this.#loginScreenRecoveryElements();
+  }
+
+  #changeForm(property1, property2) {
+    this.$loginForm.style.display = property1;
+    this.$registerForm.style.display = property2;
+  }
 }
