@@ -43,7 +43,7 @@ export class HomeUI {
     const $errorCard = Utils.createElementWithClass("div", "error");
     $errorCard.innerHTML = `   
             <h1>sorry</h1>
-            <img/>
+            <img>
             <p>Pokemon not found</p>
             `;
     Utils.fadeIn($errorCard);

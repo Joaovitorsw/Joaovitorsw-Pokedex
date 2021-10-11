@@ -18,7 +18,7 @@ export class PokemonDetails {
     const $pokemonContent = Utils.createElementWithClass("div", "pokemon-content");
 
     $pokemonContent.innerHTML = `
-      <a href="/#"<button class="back">
+      <a href="/?#"<button class="back">
       <img alt="&larr;" class="arrow" crossorigin="anonymous"/> 
       Back
       </button>
