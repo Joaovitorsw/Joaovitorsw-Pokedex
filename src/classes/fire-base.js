@@ -28,4 +28,13 @@ export class FireBase {
         alert("Failed to login");
       });
   }
+
+  static register(email, password) {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        alert("successful registration");
+      })
+      .catch((error) => alert("Failed to register"));
+  }
 }
