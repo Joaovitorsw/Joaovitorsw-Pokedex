@@ -78,7 +78,7 @@ export class HomeUI {
 
     types.forEach((pokeTypes) => Utils.appendPokemonType(pokeTypes, $pokeTypes));
 
-    $routerLink.href = `#details/${pokemonName}`;
+    $routerLink.href = `?#details/${pokemonName}`;
     $pokeInfo.innerHTML = `  
         <img src="${spriteVersionUrl}" alt="${pokemonName}" crossorigin="anonymous"/>
         <h1 class="poke-number">#${maskedPokemonID}</h1>

@@ -9,23 +9,21 @@ import { FireBase } from "./fire-base.js";
 import { LoginScreen } from "./login-screen.js";
 
 export class SinglePageApplication {
-  static $loginScreen = new LoginScreen();
-
   static addHashListener() {
     window.addEventListener("hashchange", SinglePageApplication.renderPage);
   }
 
   static getTargetRoute(hash) {
     const hashIsEmpty = hash === "";
-    return hashIsEmpty ? "home" : hash.replace("#", "");
+    return hashIsEmpty ? "home" : hash.replace("#", "").replace("?", "");
   }
 
   static async renderPage() {
     const hashedRoute = window.location.hash;
-    if (hashedRoute === "") location.hash = "?";
     const targetRoute = SinglePageApplication.getTargetRoute(hashedRoute);
 
     const [fragment, param] = targetRoute.split("/");
+
     const renderPageFn = ROUTES[fragment];
 
     const hasParam = !!param;
@@ -33,11 +31,14 @@ export class SinglePageApplication {
 
     $main.innerHTML = "";
     $main.appendChild($html);
+    const loginScreen = new LoginScreen();
     const isHome = $html.className === "homepage";
     const addonsFn = isHome ? SinglePageApplication.homePage : SinglePageApplication.pokemonDetails;
     await SinglePageApplication.firstLoading();
+
+    if (FireBase.notConnected) loginScreen.show();
+
     addonsFn();
-    if (FireBase.notConnected) SinglePageApplication.$loginScreen.show();
   }
 
   static homePage() {
