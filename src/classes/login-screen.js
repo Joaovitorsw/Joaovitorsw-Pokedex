@@ -127,10 +127,10 @@ export class LoginScreen {
     if (isValid) {
       $inputType === "text" ? (this.emailIsValid = true) : (this.passwordIsValid = true);
       $inputType === "text" ? (this.email = $input.value) : (this.password = $input.value);
-      this.$button.disabled = false;
       $input.classList.remove("invalid");
     }
     this.userIsValid = this.emailIsValid && this.passwordIsValid;
+    if (this.userIsValid) this.$button.disabled = false;
   }
 
   #submitRemoveDisable() {
