@@ -17,11 +17,12 @@ export class SinglePageApplication {
 
   static getTargetRoute(hash) {
     const hashIsEmpty = hash === "";
-    return hashIsEmpty ? "home" : hash.replace("?#", "");
+    return hashIsEmpty ? "home" : hash.replace("#", "");
   }
 
   static async renderPage() {
     const hashedRoute = window.location.hash;
+    if (hashedRoute === "") location.hash = "?";
     const targetRoute = SinglePageApplication.getTargetRoute(hashedRoute);
 
     const [fragment, param] = targetRoute.split("/");
