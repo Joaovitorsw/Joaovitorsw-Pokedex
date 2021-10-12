@@ -42,7 +42,7 @@ export class LoginScreen {
             <input type="text" placeholder="Email address"/>
             <span class="form-error">Invalid email address</span>
             <input type="password" placeholder="Password"/>
-            <span class="form-error">Invalid email address</span>
+            <span class="form-error">Invalid password</span>
             <button disabled>Create</button>
             <p class="message">Already registered? 
             <a>Sign In</a>
@@ -52,7 +52,7 @@ export class LoginScreen {
             <input type="text" placeholder="Email address"/>
             <span class="form-error">Invalid email address</span>
             <input type="password" placeholder="Password"/>
-            <span class="form-error">Invalid email address</span>
+            <span class="form-error">Invalid password</span>
             <button disabled>Login</button>
             <p class="message">Not registered? 
             <a>Create an account</a>
