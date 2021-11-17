@@ -1,0 +1,140 @@
+@import "../../scss/keyframes";
+
+profile-card {
+  padding: 20px;
+  min-width: 320px;
+  max-width: 370px;
+
+  .button {
+    width: 110px;
+    display: flex;
+    padding: 15px;
+  }
+
+  button {
+    width: 85px;
+    height: 32px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 25px;
+    color: #fff;
+    background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(0.94);
+    }
+  }
+
+  .sing-in {
+    display: block;
+  }
+  .logoff {
+    display: none;
+  }
+
+  .content {
+    background: #ffffff;
+    border-radius: 100px 50px 50px 100px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .img {
+    height: 75px;
+    width: 95px;
+    background: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+
+    &.logged:hover {
+      & > .user-img {
+        opacity: 0.5;
+      }
+      & > a {
+        opacity: 1;
+
+        & > .config-img {
+          opacity: 1;
+        }
+      }
+    }
+
+    .user-img,
+    .config-img,
+    a {
+      transition: opacity 1s;
+    }
+
+    .user-img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      opacity: 1;
+    }
+    .config-img {
+      cursor: pointer;
+      position: absolute;
+      width: 45px;
+      left: 6px;
+      top: -46px;
+      opacity: 0;
+      animation: hurricane 2.5s linear infinite;
+    }
+
+    a {
+      color: black;
+      font-weight: 700;
+      font-family: "Jura", sans-serif;
+      text-decoration: none;
+      opacity: 0;
+      position: absolute;
+      font-size: 12px;
+      top: 52px;
+      left: 15px;
+    }
+  }
+
+  .details {
+    width: 170px;
+    position: relative;
+    left: 15px;
+    p {
+      margin-top: 7px;
+      font-size: 12px;
+    }
+    span {
+      word-break: break-all;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  profile-card {
+    padding: 10px;
+    min-width: 320px;
+    max-width: 600px;
+
+    div.img {
+      width: 80px;
+      height: 80px;
+    }
+    .details {
+      span {
+        font-size: 18px;
+      }
+    }
+    .img.logged {
+      a {
+        left: 12px;
+      }
+    }
+  }
+}
