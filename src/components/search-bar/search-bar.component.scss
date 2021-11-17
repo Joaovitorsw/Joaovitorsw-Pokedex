@@ -16,9 +16,8 @@
   margin-left: 15px;
   margin-right: 10px;
   width: 15px;
-  content: url(../assets/images/search-bar-icon.svg);
+  content: url(../../assets/images/search-bar-icon.svg);
   transition: transform 0.3s ease;
-  cursor: pointer;
 }
 .search-bar-icon:hover {
   transform: scale(1.3);
@@ -52,7 +51,7 @@
   top: 0;
   transform: translateY(45%);
 }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 800px) {
   .navigation-content {
     padding: 0;
     flex-direction: column;
