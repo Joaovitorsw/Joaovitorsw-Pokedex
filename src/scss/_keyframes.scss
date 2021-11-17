@@ -52,7 +52,7 @@
     background: #e74c3c;
   }
 }
-@keyframes shake {
+@keyframes pokeballShake {
   0% {
     transform: translate(0, 0) rotate(0) scale(0.3);
   }
@@ -92,5 +92,36 @@
   }
   100% {
     transform: translateX(100%);
+  }
+}
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes hurricane {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

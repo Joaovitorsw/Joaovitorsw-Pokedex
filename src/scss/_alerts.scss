@@ -1,0 +1,105 @@
+@import "keyframes";
+.alert {
+  position: absolute;
+  top: 20;
+  right: 60;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s;
+
+  &-bottom {
+    position: relative;
+    margin: 0 auto;
+    max-width: 270px;
+    bottom: 40px;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+
+  &.fade-out {
+    opacity: 0;
+  }
+}
+
+.circle-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin: 10px;
+}
+
+.icon {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.circle {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 2.5px;
+  background-clip: content-box;
+  animation: spin 10s linear infinite;
+}
+
+.circle-wrapper:active .circle {
+  animation: spin 2s linear infinite;
+}
+
+.success {
+  background-color: #4bb543;
+  border: 2.5px dashed #4bb543;
+  color: #4bb543;
+
+  &.circle ~ .icon {
+    background-image: url(./assets/images/iconmonstr-check-mark-1.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+  }
+}
+
+.error {
+  background-color: #ca0b00;
+  border: 2.5px dashed #ca0b00;
+  color: #ca0b00;
+
+  &.circle ~ .icon {
+    background-image: url(./assets/images/x-svgrepo-com.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40%;
+  }
+}
+
+.warning {
+  background-color: #f1d818;
+  border: 2.5px dashed #f1d818;
+  color: #f1d818;
+
+  &.circle ~ .icon {
+    background-image: url(./assets/images/large-exclamation-mark-svgrepo-com.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+  }
+}
+
+.page-wrapper {
+  min-width: 200px;
+  width: 100%;
+  height: 70px;
+  border-radius: 15px;
+  background-color: #ffff;
+  display: flex;
+  align-items: center;
+
+  p {
+    margin-right: 10px;
+  }
+}
