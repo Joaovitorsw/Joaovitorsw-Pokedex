@@ -1,12 +1,10 @@
-@import "homepage";
-@import "keyframes";
-@import "floatinglabel";
-@import "pokemondetails";
-@import "types";
-@import "mixins";
-@import "loading";
-@import "loginscreen";
-@import "menu";
+@import "scss/homepage";
+@import "scss/keyframes";
+@import "scss/pokemondetails";
+@import "scss/mixins";
+@import "scss/loading";
+@import "scss/alerts";
+@import "scss/settings";
 
 #root {
 }
@@ -44,6 +42,9 @@ html.loading.login {
 
 .fade {
   animation: fade 1.5s;
+}
+.fade-in {
+  animation: fade 0.5s;
 }
 
 ::-webkit-scrollbar {
