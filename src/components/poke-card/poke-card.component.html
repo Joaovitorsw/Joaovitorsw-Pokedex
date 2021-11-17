@@ -1,0 +1,19 @@
+<div class="poke-content">
+  <fav-star></fav-star>
+  <a href="{{ route }}">
+    <div class="{{ type1 }}">
+      <div class="poke-info">
+        <img src="{{ image }}" alt="{{ name }}" crossorigin="anonymous" />
+        <h1 class="poke-number">#{{ id }}</h1>
+        <h2 class="poke-name">
+          {{ name }}
+        </h2>
+      </div>
+      <div class="poke-types">
+        Types:
+        <span class="{{ type1 }}">{{ type1 }}</span>
+        <span class="{{ type2 }}">{{ type2 }}</span>
+      </div>
+    </div>
+  </a>
+</div>
