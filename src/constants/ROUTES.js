@@ -1,7 +1,7 @@
-import { PokemonPage } from "../pages/pokemonpage.js";
-import { HomePage } from "../pages/homepage.js";
+import { HomePage } from "../pages/home.page.js";
+import { SettingsPage } from "../pages/settings.page.js";
 
 export const ROUTES = {
-  home: HomePage,
-  details: PokemonPage,
+  home: new HomePage(),
+  settings: new SettingsPage(),
 };
