@@ -19,12 +19,12 @@ export class LoadingScreenService {
     document.documentElement.classList.add("loading");
   }
 
-  removeLoadingScreen() {
+  removeLoadingScreen(time = 500) {
     const $loadingScreen = document.querySelector(".loader");
-    setTimeout(() => $loadingScreen.classList.add("fade-out"), 500);
+    setTimeout(() => $loadingScreen.classList.add("fade-out"), time);
     setTimeout(() => {
       $main.removeChild($loadingScreen);
       document.documentElement.classList.remove("loading");
-    }, 1500);
+    }, time * 3);
   }
 }
