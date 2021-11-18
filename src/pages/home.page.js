@@ -2,17 +2,20 @@ import { MenuComponent } from "../components/menu-gen/menu-gen.component";
 import { PokemonCardComponent } from "../components/poke-card/poke-card.component";
 import { ProfileCardComponent } from "../components/profile-card/profile-card.component.js";
 import { SearchBarComponent } from "../components/search-bar/search-bar.component.js";
+import { FireBaseService } from "../services/fire-base.service";
 import { IndexDBService } from "../services/indexdb.service.js";
 import { UtilsService } from "../services/utils.service.js";
 
 export class HomePage {
   #selectedGenerationOption;
   #searchFilterTerm;
+  #fireBaseService;
   #indexDB;
 
   constructor() {
     this.declarations = [PokemonCardComponent, SearchBarComponent, MenuComponent, ProfileCardComponent];
     this.#indexDB = new IndexDBService();
+    this.#fireBaseService = new FireBaseService();
     this.pokemons = [];
   }
 
@@ -35,7 +38,20 @@ export class HomePage {
 
   async changePokemonRange({ start, end, searchTerm = "" }) {
     const cachedArray = await this.#indexDB.get("pokemons");
-    const generationSelected = cachedArray.slice(start, end);
+    let generationSelected = cachedArray.slice(start, end);
+    if (isNaN(start, end)) {
+      const hasLogin = this.#fireBaseService.getUser();
+
+      if (hasLogin !== null) {
+        const favPokemons = await this.#fireBaseService.getFavoritesPokemons();
+        generationSelected = [];
+        favPokemons.forEach((pokemon) => {
+          generationSelected.push(pokemon.data());
+        });
+      } else {
+        return UtilsService.notificationAlert("error", "You must be logged");
+      }
+    }
 
     const searchPokemon = (pokemon) => pokemon.indexOf(searchTerm) > -1;
     const pokemons = generationSelected.filter((pokemon) => {
@@ -63,6 +79,7 @@ export class HomePage {
       UtilsService.fade($pokeCard);
       this.$pokemonsContent.append($pokeCard);
     });
+    this.#fireBaseService.start();
   }
 
   createPokemonCard(pokemon) {
