@@ -61,21 +61,28 @@ $type-colors-dark: (
 );
 
 @each $name, $color in $type-colors-dark {
-  .#{$name} .poke-types {
-    background-color: $color;
+  pokemon-card,
+  .pokemon-card {
+    .#{$name} > .poke-types {
+      background-color: $color;
+    }
+    .#{$name} h1 {
+      color: black;
+      text-shadow: 0 0 2px $color;
+    }
+    .#{$name} h2 {
+      color: black;
+      text-shadow: 0 0 2px $color;
+    }
   }
-  .#{$name} h1 {
-    color: black;
-    text-shadow: 0 0 2px $color;
-  }
-  .#{$name} h2 {
+  h1.#{$name} {
     color: black;
     text-shadow: 0 0 2px $color;
   }
 }
 
 @each $name, $color in $type-colors {
-  .#{$name},
+  .#{$name}:not(h1),
   span:first-child.#{$name},
   .#{$name} .poke-number {
     background-color: $color;
