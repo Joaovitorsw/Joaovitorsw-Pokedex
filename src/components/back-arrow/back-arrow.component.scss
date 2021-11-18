@@ -1,0 +1,24 @@
+back-arrow {
+  h1 {
+    text-decoration: none;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    font-family: "Jura", sans-serif;
+    font-weight: 700;
+    width: 100%;
+    max-width: 110px;
+    padding: 5px;
+    border: none;
+    color: black;
+    background: white;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  .arrow {
+    width: 32px;
+    height: 42px;
+    background: url("../../assets/images/arrow-right.svg") no-repeat center;
+  }
+}
