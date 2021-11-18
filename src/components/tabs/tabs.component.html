@@ -1,0 +1,95 @@
+<ul class="tabs-navigation">
+  <li class="tab-option active">About</li>
+  <li class="tab-option">Base Stats</li>
+  <li class="tab-option">Evolution</li>
+  <li class="tab-option">Moves</li>
+</ul>
+<div class="tabs-card">
+  <div class="tab about active">
+    <ul>
+      <li>
+        Species:<span>{{ aboutName }}</span>
+      </li>
+      <li>
+        Height:<span>{{ aboutHeight }}M</span>
+      </li>
+      <li>
+        Weight:<span>{{ aboutWeight }}Kg</span>
+      </li>
+      <li>
+        Abilities:<span>{{ aboutAbilities }}</span>
+      </li>
+    </ul>
+  </div>
+  <div class="tab base-stats">
+    <ul>
+      <li>
+        HP:
+        <span>{{ hp }}</span>
+        <div class="stats">
+          <div class="hp"></div>
+        </div>
+      </li>
+      <li>
+        Attack:
+        <span>{{ attack }}</span>
+        <div class="stats">
+          <div class="attack"></div>
+        </div>
+      </li>
+      <li>
+        Defense:
+        <span>{{ defense }}</span>
+        <div class="stats">
+          <div class="defense"></div>
+        </div>
+      </li>
+      <li>
+        Sp Atk:
+        <span>{{ spAtk }}</span>
+        <div class="stats">
+          <div class="spAtk"></div>
+        </div>
+      </li>
+      <li>
+        Sp Def:
+        <span>{{ spDef }}</span>
+        <div class="stats">
+          <div class="spDef"></div>
+        </div>
+      </li>
+      <li>
+        Speed:
+        <span>{{ speed }}</span>
+        <div class="stats">
+          <div class="speed"></div>
+        </div>
+      </li>
+      <li>
+        Total:<span>{{ totalStats }}</span>
+        <div class="stats">
+          <div class="total"></div>
+        </div>
+      </li>
+    </ul>
+    {{ style }}
+  </div>
+  <div class="tab evolution"></div>
+  <div class="tab move-list">
+    <table class="move-list">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Contest</th>
+          <th>PP</th>
+          <th>Power</th>
+          <th>Accuracy</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
