@@ -1,5 +1,5 @@
-@import "keyframes";
-.alert {
+@import "../../scss/keyframes";
+custom-alert {
   position: absolute;
   top: 20;
   right: 60;
@@ -57,7 +57,7 @@
   color: #4bb543;
 
   &.circle ~ .icon {
-    background-image: url(./assets/images/iconmonstr-check-mark-1.svg);
+    background-image: url(../../assets/images/iconmonstr-check-mark-1.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 50%;
@@ -70,7 +70,7 @@
   color: #ca0b00;
 
   &.circle ~ .icon {
-    background-image: url(./assets/images/x-svgrepo-com.svg);
+    background-image: url(../../assets/images/x-svgrepo-com.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 40%;
@@ -83,7 +83,7 @@
   color: #f1d818;
 
   &.circle ~ .icon {
-    background-image: url(./assets/images/large-exclamation-mark-svgrepo-com.svg);
+    background-image: url(../../assets/images/large-exclamation-mark-svgrepo-com.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 50%;
