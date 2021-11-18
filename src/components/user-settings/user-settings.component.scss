@@ -1,0 +1,152 @@
+@import "../../scss/keyframes";
+
+user-settings {
+  display: flex;
+  align-items: unset;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 850px;
+  max-height: 700px;
+  margin: 40px auto 0 auto;
+  border-radius: 5px;
+  box-shadow: 0px 6px 16px rgba(98, 100, 108, 0.5);
+
+  .settings-title {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    font-size: 30px;
+    color: #6c63ff;
+    font-family: "Jura", sans-serif;
+  }
+
+  .avatar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .image-input {
+      text-align: center;
+    }
+    input {
+      display: none;
+    }
+    label {
+      display: flex;
+      color: #fff;
+      background: #6c63ff;
+      border-radius: 5px;
+      padding: 7px;
+      font-size: 115%;
+      cursor: pointer;
+      &:hover > .image-button {
+        animation: shake 0.35s;
+      }
+    }
+
+    .image-button {
+      width: 25px;
+      height: 20px;
+      margin-right: 10px;
+      content: url(../../assets/images/picture-icon.png);
+    }
+    span {
+      display: none;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  .avatar {
+    width: 120px;
+    height: 100px;
+    border-radius: 50%;
+  }
+
+  .avatar-text {
+    margin: 10px;
+    color: #888cbd;
+  }
+
+  .settings-content {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: unset;
+
+    label {
+      letter-spacing: 0.75px;
+      font-size: 0.9rem;
+      color: #888cbd;
+      opacity: 0.7;
+    }
+
+    input {
+      padding-left: 5px;
+      padding-bottom: 5px;
+      padding-top: 16px;
+      margin-left: 0px;
+      width: 100%;
+      background-color: #fff;
+      border: none;
+      outline: none;
+      border-bottom: 2px solid #eaeaea;
+      letter-spacing: 0.29px;
+      color: #292b43;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: "Jura", sans-serif;
+    }
+
+    .field {
+      padding-bottom: 25px;
+    }
+
+    .field:last-child {
+      padding-bottom: 15px;
+    }
+
+    .bottom {
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    }
+
+    button {
+      width: 150px;
+      height: 45px;
+      bottom: 20px;
+      border: none;
+    }
+
+    .button-submit {
+      margin-right: 5px;
+      background-color: #6c63ff;
+      font-size: 14px;
+      color: #fff;
+      letter-spacing: 0.5px;
+      font-weight: 300;
+    }
+
+    .button-cancel {
+      margin-left: 5px;
+      background-color: #eaeaea;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      font-weight: 300;
+      color: #7376a3;
+      opacity: 0.8;
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+
+    button:focus {
+      outline: 0;
+    }
+  }
+}
