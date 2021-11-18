@@ -13,7 +13,5 @@ export class Observable {
 
   publish(data) {
     this.observers.forEach((observer) => observer(data));
-
-    console.log(`Notifying ${this.observers.length} Observers`, data);
   }
 }
