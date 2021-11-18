@@ -42,7 +42,7 @@ export class LoginScreenComponent extends HTMLElement {
     UtilsService.fade(this);
     this.$html.classList.add("login");
     this.#buttonEnable();
-    this.#firebaseService.start();
+    this.startFireBase();
   }
 
   #createButton() {
