@@ -88,12 +88,12 @@
   opacity: 0;
   order: 1;
   width: 100%;
-  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 
   &.active {
     background-color: var(--white-color);
     visibility: visible;
-    max-height: 420px;
+    max-height: 465px;
     border: 1px solid #000;
     opacity: 1;
   }
