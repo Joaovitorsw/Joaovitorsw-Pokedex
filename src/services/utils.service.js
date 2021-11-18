@@ -1,4 +1,5 @@
 import { $main } from "../app.component.js";
+import { CustomAlertComponent } from "../components/custom-alert/custom-alert.component.js";
 import { POKE_KEYS } from "../constants/POKE_KEYS.js";
 $main;
 
@@ -87,6 +88,8 @@ export class UtilsService {
     };
   }
 
+  static findPokemonIDinUrl() {}
+
   static getPokeImageUrl = (pokeName, isShine) => {
     const pokemonID = POKE_KEYS[pokeName];
     const shineUrl = isShine ? "shiny/" : "";
@@ -98,36 +101,12 @@ export class UtilsService {
     return urlVersion;
   };
 
-  static changeForm($element1, $element2, property1, property2) {
-    $element1.style.display = property1;
-    $element2.style.display = property2;
-  }
-
   static notificationAlert(type, message) {
-    const $alert = UtilsService.createNotificationAlert(type, message);
-    UtilsService.fade($alert);
+    const declarations = [CustomAlertComponent];
+    const $alert = document.createElement("custom-alert");
+    $alert.type = type;
+    $alert.message = message;
     $main.appendChild($alert);
-    setTimeout(() => UtilsService.fadeOut($alert), 2000);
-  }
-
-  static removeAlert() {
-    const $alert = document.querySelector(".alert-bottom");
-    UtilsService.fadeOut($alert);
-  }
-
-  static createNotificationAlert(type, message) {
-    const $alert = UtilsService.createElementWithClass("div", "alert");
-    $alert.innerHTML = `
-    <div class="${type} page-wrapper">
-    <div class="circle-wrapper">
-    <div class="${type} circle"></div>
-    <div class="icon">
-    <div class="icon-alert"></div>
-    </div>
-    </div>
-    <p>${message}</p>
-    `;
-    return $alert;
   }
 
   static bindModelToView(object, template) {
