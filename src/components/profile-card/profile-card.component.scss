@@ -1,9 +1,21 @@
 @import "../../scss/keyframes";
 
 profile-card {
+  @media screen and (max-width: 320px) {
+    max-width: 300px;
+
+    .profile-card {
+      & .details {
+        left: 5px;
+      }
+      & .button {
+        padding: 0;
+      }
+    }
+  }
   padding: 20px;
-  min-width: 320px;
-  max-width: 370px;
+
+  max-width: 330px;
 
   .button {
     width: 110px;

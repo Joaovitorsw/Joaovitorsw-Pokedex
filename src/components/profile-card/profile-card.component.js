@@ -27,7 +27,6 @@ export class ProfileCardComponent extends HTMLElement {
       this.setLogoff();
     });
     this.$signIn.addEventListener("click", () => {
-      console.log(this.$loginScreen);
       $main.appendChild(this.$loginScreen);
     });
     this.$logoff.addEventListener("click", () => {
