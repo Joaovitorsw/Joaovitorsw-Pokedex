@@ -7,6 +7,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Observable } from "../classes/observable.js";
 import { UtilsService } from "./utils.service.js";
@@ -32,8 +33,13 @@ export class FireBaseService {
       appId: "1:230418485778:web:344b0570d44434ec37fecb",
       measurementId: "G-J36099809G",
     };
-    initializeApp(firebaseConfig);
+    this.app = initializeApp(firebaseConfig);
     this.hasLogin();
+  }
+
+  getUser() {
+    const auth = getAuth();
+    return auth.currentUser;
   }
 
   hasLogin() {
@@ -41,6 +47,7 @@ export class FireBaseService {
     onAuthStateChanged(auth, () => {
       if (auth.currentUser) {
         this.profile$.publish(auth.currentUser);
+        this.getFavoritesPokemons();
       }
     });
   }
@@ -91,13 +98,66 @@ export class FireBaseService {
       });
   }
 
-  async uploadFile(file) {
+  uploadFile(file) {
     const auth = getAuth();
     const storage = getStorage();
     const urlRef = ref(storage, `users/${auth.currentUser.uid}/profile.jpg`);
 
-    await uploadBytes(urlRef, file).then(() => UtilsService.notificationAlert("success", "Upload File"));
-    await setTimeout(() => getDownloadURL(urlRef).then((imgUrl) => FireBaseService.uploadImage(imgUrl)), 1500);
+    uploadBytes(urlRef, file).then(() => getDownloadURL(urlRef).then((imgUrl) => this.uploadImage(imgUrl)));
+  }
+  async addFavoritePokemon(pokemon) {
+    const auth = getAuth();
+    const db = getFirestore();
+    const userCollectionReference = collection(db, "users");
+    const userReference = doc(userCollectionReference, auth.currentUser.uid);
+    const favoritesCollection = collection(userReference, "favorites");
+
+    try {
+      await addDoc(favoritesCollection, pokemon);
+    } catch (error) {
+      alert(`Error adding document:${error}`);
+    }
+  }
+
+  async getFavoritesPokemons() {
+    const favoritesCollection = this.getFavoritePath();
+    const querySnapshot = await getDocs(favoritesCollection);
+    querySnapshot.forEach((doc) => {
+      const pokemon = doc.data();
+      const $allCards = document.querySelectorAll("pokemon-card");
+      $allCards.forEach(($card) => {
+        if ($card.pokemonID === pokemon.id) {
+          const favPokemons = $card.querySelector("fav-star");
+          favPokemons.querySelector(".fav-content").classList.add("active");
+        }
+      });
+    });
+    return querySnapshot;
+  }
+
+  getFavoritePath() {
+    const auth = getAuth();
+    const db = getFirestore();
+    const userCollectionReference = collection(db, "users");
+    const userReference = doc(userCollectionReference, auth.currentUser.uid);
+    const favoritesCollection = collection(userReference, "favorites");
+    return favoritesCollection;
+  }
+
+  async removeFavoritePokemon(pokemon) {
+    const favoritesCollection = this.getFavoritePath();
+    const querySnapshot = await getDocs(favoritesCollection);
+    querySnapshot.forEach((document) => {
+      const actuallyPokemonID = document.data().id;
+      const isThePokemon = actuallyPokemonID === pokemon.id;
+      const documentRef = doc(favoritesCollection, document.id);
+      if (isThePokemon) return deleteDoc(documentRef);
+    });
+  }
+
+  removeStars() {
+    const stars = document.querySelectorAll(".fav-content");
+    stars.forEach((star) => star.classList.remove("active"));
   }
 
   uploadImage(url) {
@@ -105,7 +165,10 @@ export class FireBaseService {
     updateProfile(auth.currentUser, {
       photoURL: url,
     })
-      .then(() => UtilsService.notificationAlert("success", "Profile updated!"))
+      .then(() => {
+        UtilsService.notificationAlert("success", "Profile updated!");
+        this.hasLogin();
+      })
       .catch(() => UtilsService.notificationAlert("error", "An error occurred"));
   }
 
@@ -118,5 +181,10 @@ export class FireBaseService {
       .catch((error) => {
         UtilsService.notificationAlert("error", "An error happened");
       });
+    this.removeStars();
+    const menu = document.querySelector("menu-gen");
+    const selected = document.querySelector(".selected h1");
+    menu.selectOption$.publish({ start: 0, end: 898 });
+    selected.innerHTML = "Filter by Generation";
   }
 }
