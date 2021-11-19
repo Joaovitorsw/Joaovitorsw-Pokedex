@@ -38,10 +38,9 @@ export class HomePage {
   }
 
   async changePokemonRange({ start = 0, end = 898, searchTerm = "" }) {
-    this.disableInfiniteScroll();
-    if (start === 0 && end === 898) this.enableInfiniteScroll();
     const cachedArray = await this.#indexDB.get("pokemons");
     const generationSelected = cachedArray.slice(start, end);
+
     if (generationSelected.length === 0) await this.favoriteRange(generationSelected);
 
     const searchPokemon = (pokemon) => pokemon.indexOf(searchTerm) > -1;
@@ -51,6 +50,8 @@ export class HomePage {
     });
     const sortedPokemons = pokemons.sort((a, b) => a.id - b.id);
     this.pokemons = sortedPokemons;
+    this.previous = 0;
+    this.next = 20;
     const updateFn = (this.pokemons.length === 0 ? this.noPokemonsFound : this.updateScreen).bind(this);
     updateFn();
   }
@@ -71,24 +72,14 @@ export class HomePage {
     return UtilsService.notificationAlert("error", "You must be logged");
   }
   enableInfiniteScroll() {
-    let start = 20;
+    this.previous = 0;
+    this.next = 20;
     window.addEventListener("scroll", () => {
       const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
       if (endScroll) {
-        const previous = start;
-        start += 20;
-        this.createAndAppendPokemons(previous, start);
-      }
-    });
-  }
-
-  disableInfiniteScroll() {
-    window.removeEventListener("scroll", () => {
-      const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
-      if (endScroll) {
-        const previous = start;
-        start += 20;
-        this.createAndAppendPokemons(previous, start);
+        this.previous = this.next;
+        this.next += 20;
+        this.createAndAppendPokemons(this.previous, this.next);
       }
     });
   }
@@ -102,8 +93,12 @@ export class HomePage {
     this.pokemons = await this.#indexDB.get("pokemons");
   }
 
-  createAndAppendPokemons(previous = 0, start = 20) {
-    const splicedPokemons = this.pokemons.slice(previous, start);
+  createAndAppendPokemons() {
+    const maxNext = this.next === this.pokemons.length;
+    const newNext = this.next > this.pokemons.length;
+    if (maxNext) return;
+    if (newNext) this.next = this.pokemons.length;
+    const splicedPokemons = this.pokemons.slice(this.previous, this.next);
     splicedPokemons.forEach((pokemon) => {
       const $pokeCard = this.createPokemonCard(pokemon);
       UtilsService.fade($pokeCard);
@@ -144,6 +139,7 @@ export class HomePage {
       const selectedOption = this.#selectedGenerationOption;
       this.changePokemonRange({ ...selectedOption, searchTerm });
     });
+
     $navigationContent.append($searchBar);
     $navigationContent.append($profileCard);
     $navigationContent.append($menu);
