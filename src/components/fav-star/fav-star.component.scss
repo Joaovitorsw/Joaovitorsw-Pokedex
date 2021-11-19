@@ -1,4 +1,10 @@
 fav-star {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   & .fav-content {
     width: 100%;
     position: absolute;
@@ -6,21 +12,23 @@ fav-star {
     z-index: 2;
     padding: 20px;
     &.active > .fav-star {
+      opacity: 1;
       content: url(../../assets/images/fav-poke-icon.png);
     }
     & .fav-star {
       width: 32px;
       cursor: pointer;
       position: absolute;
+      opacity: 1;
       right: 5px;
       top: 5px;
       content: url(../../assets/images/fav-star-icon.png);
-      transition: content 2s, transform 0.2s;
+      transition: content 2s, transform 0.2s, opacity 0.2s;
 
-      &:hover {
+      &.opacity {
         opacity: 0.6;
         transform: scale(1.05);
-        content: url(../../assets/images/fav-poke-icon.png);
+        content: url(../../assets/images/fav-star-opacity.png);
       }
 
       &.fav-pokemon {

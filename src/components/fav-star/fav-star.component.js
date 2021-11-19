@@ -15,6 +15,9 @@ export class FavStarComponent extends HTMLElement {
     const style = favStarStyle;
     this.innerHTML = favStarTemplate;
     this.$favContent = this.querySelector(".fav-content");
+    this.$favStar = this.querySelector(".fav-star");
+    this.$favStar.addEventListener("pointerenter", () => this.$favStar.classList.add("opacity"));
+    this.$favStar.addEventListener("pointerleave", () => this.$favStar.classList.remove("opacity"));
     this.addEventListener("click", () => {
       if (this.#fireBaseService.getUser()) {
         this.toggleStar();
