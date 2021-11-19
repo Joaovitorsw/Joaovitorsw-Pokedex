@@ -14,8 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "-": "^0.0.1",
-    "@fortawesome/fontawesome-free": "^5.15.4",
-    "@parcel/transformer-svg": "^2.0.0-nightly.2430",
+    "ansi-html-community": "^0.0.8",
     "d": "^1.0.1",
     "firebase": "^9.1.2",
     "idb-keyval": "^6.0.3",
@@ -25,7 +24,7 @@
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-rc.0",
     "@parcel/transformer-sass": "^2.0.0-rc.0",
-    "@researchgate/babel-plugin-transform-scss-import-to-string": "^1.0.0",
+    "@parcel/transformer-svg": "^2.0.0-nightly.2430",
     "babel-plugin-transform-html-import-to-string": "^2.0.0",
     "sass": "^1.43.4"
   }
