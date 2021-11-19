@@ -19,13 +19,12 @@
     "firebase": "^9.1.2",
     "idb-keyval": "^6.0.3",
     "parcel": "^2.0.0-rc.0",
-    "r": "^0.0.5"
-  },
-  "devDependencies": {
+    "r": "^0.0.5",
     "@parcel/transformer-image": "^2.0.0-rc.0",
     "@parcel/transformer-sass": "^2.0.0-rc.0",
     "@parcel/transformer-svg": "^2.0.0-nightly.2430",
     "babel-plugin-transform-html-import-to-string": "^2.0.0",
     "sass": "^1.43.4"
-  }
+  },
+  "devDependencies": {}
 }
