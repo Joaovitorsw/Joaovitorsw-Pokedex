@@ -36,22 +36,10 @@ export class HomePage {
     this.$pokemonsContent.innerHTML = "";
   }
 
-  async changePokemonRange({ start, end, searchTerm = "" }) {
+  async changePokemonRange({ start = 0, end = 898, searchTerm = "" }) {
     const cachedArray = await this.#indexDB.get("pokemons");
-    let generationSelected = cachedArray.slice(start, end);
-    if (isNaN(start, end)) {
-      const hasLogin = this.#fireBaseService.getUser();
-
-      if (hasLogin !== null) {
-        const favPokemons = await this.#fireBaseService.getFavoritesPokemons();
-        generationSelected = [];
-        favPokemons.forEach((pokemon) => {
-          generationSelected.push(pokemon.data());
-        });
-      } else {
-        return UtilsService.notificationAlert("error", "You must be logged");
-      }
-    }
+    const generationSelected = cachedArray.slice(start, end);
+    if (generationSelected.length === 0) await this.favoriteRange(generationSelected);
 
     const searchPokemon = (pokemon) => pokemon.indexOf(searchTerm) > -1;
     const pokemons = generationSelected.filter((pokemon) => {
@@ -62,6 +50,22 @@ export class HomePage {
     this.pokemons = sortedPokemons;
     const updateFn = (this.pokemons.length === 0 ? this.noPokemonsFound : this.updateScreen).bind(this);
     updateFn();
+  }
+
+  async favoriteRange(array) {
+    const hasLogin = this.#fireBaseService.getUser();
+    if (hasLogin !== null) {
+      const favPokemons = await this.#fireBaseService.getFavoritesPokemons();
+      favPokemons.forEach((pokemon) => {
+        array.push(pokemon.data());
+      });
+      return;
+    }
+    const menu = document.querySelector("menu-gen");
+    const selected = document.querySelector(".selected h1");
+    menu.selectOption$.publish();
+    selected.innerHTML = "Filter by Generation";
+    return UtilsService.notificationAlert("error", "You must be logged");
   }
 
   updateScreen() {

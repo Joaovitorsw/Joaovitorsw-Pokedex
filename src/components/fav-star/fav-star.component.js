@@ -19,7 +19,8 @@ export class FavStarComponent extends HTMLElement {
     this.$favStar.addEventListener("pointerenter", () => this.$favStar.classList.add("opacity"));
     this.$favStar.addEventListener("pointerleave", () => this.$favStar.classList.remove("opacity"));
     this.addEventListener("click", () => {
-      if (this.#fireBaseService.getUser()) {
+      const hasUser = this.#fireBaseService.getUser();
+      if (hasUser) {
         this.toggleStar();
         return;
       }

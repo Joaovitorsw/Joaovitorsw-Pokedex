@@ -158,6 +158,10 @@ export class FireBaseService {
   removeStars() {
     const stars = document.querySelectorAll(".fav-content");
     stars.forEach((star) => star.classList.remove("active"));
+    const menu = document.querySelector("menu-gen");
+    const selected = document.querySelector(".selected h1");
+    menu.selectOption$.publish({ start: 0, end: 898 });
+    selected.innerHTML = "Filter by Generation";
   }
 
   uploadImage(url) {
@@ -182,9 +186,5 @@ export class FireBaseService {
         UtilsService.notificationAlert("error", "An error happened");
       });
     this.removeStars();
-    const menu = document.querySelector("menu-gen");
-    const selected = document.querySelector(".selected h1");
-    menu.selectOption$.publish({ start: 0, end: 898 });
-    selected.innerHTML = "Filter by Generation";
   }
 }

@@ -125,9 +125,6 @@ export class TabsComponent extends HTMLElement {
         </tr>
         `;
     });
-    const $moveList = document.querySelector(".tab.move-list");
-    $moveList.scrollTo(0, 0);
-    UtilsService.fadeIn(this.$movesTab);
   }
 
   async createEvolutionTab(data) {

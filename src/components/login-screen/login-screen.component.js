@@ -2,7 +2,7 @@ import { FireBaseService } from "../../services/fire-base.service.js";
 import { UtilsService } from "../../services/utils.service.js";
 import { loginScreenStyle } from "../login-screen/login-screen.component.scss";
 export class LoginScreenComponent extends HTMLElement {
-  #firebaseService;
+  #fireBaseService;
   #name;
   #email;
   #password;
@@ -15,8 +15,8 @@ export class LoginScreenComponent extends HTMLElement {
     this.#password = false;
     this.#passwordMatch = false;
     this.$html = document.documentElement;
-    this.#firebaseService = new FireBaseService(this);
-    this.#firebaseService.profile$.subscribe(({ displayName, photoURL }) => {
+    this.#fireBaseService = new FireBaseService(this);
+    this.#fireBaseService.profile$.subscribe(({ displayName, photoURL }) => {
       const myEvent = new CustomEvent("login-event", {
         detail: { displayName, photoURL },
       });
@@ -25,7 +25,7 @@ export class LoginScreenComponent extends HTMLElement {
   }
 
   startFireBase() {
-    this.#firebaseService.start();
+    this.#fireBaseService.start();
   }
 
   removeScreen() {
@@ -92,7 +92,7 @@ export class LoginScreenComponent extends HTMLElement {
       if (this.#email && this.#password) {
         const email = $inputEmail.value;
         const password = $inputPassword.value;
-        this.#firebaseService.login(email, password);
+        this.#fireBaseService.login(email, password);
       }
     });
     $button.disabled = true;
@@ -156,7 +156,7 @@ export class LoginScreenComponent extends HTMLElement {
         const name = $inputText.value;
         const email = $inputEmail.value;
         const password = $inputPassword.value;
-        this.#firebaseService.register(name, email, password);
+        this.#fireBaseService.register(name, email, password);
       }
     });
     const $p = UtilsService.createElementWithClass("p", "message");
@@ -224,7 +224,7 @@ export class LoginScreenComponent extends HTMLElement {
   }
 
   logoff() {
-    this.#firebaseService.logoff();
+    this.#fireBaseService.logoff();
   }
 }
 customElements.define("login-screen", LoginScreenComponent);
