@@ -125,6 +125,7 @@ export class TabsComponent extends HTMLElement {
         </tr>
         `;
     });
+    this.$movesTab.scrollTo(0, 0);
     UtilsService.fadeIn(this.$movesTab);
   }
 
