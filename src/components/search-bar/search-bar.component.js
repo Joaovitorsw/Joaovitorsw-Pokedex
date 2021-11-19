@@ -23,7 +23,7 @@ export class SearchBarComponent extends HTMLElement {
     $searchBarInput.addEventListener(
       "input",
       UtilsService.debounceEvent(() => {
-        const userText = $searchBarInput.value;
+        const userText = $searchBarInput.value.toLowerCase();
         this.searchTerm$.publish(userText);
       }, 800)
     );
