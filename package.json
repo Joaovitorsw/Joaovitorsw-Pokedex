@@ -3,8 +3,8 @@
   "version": "1.0.2",
   "description": "Pokedex using JavaScript",
   "scripts": {
-    "start": "parcel ./src/app.component.html --open",
-    "build": "parcel build ./src/app.component.html --detailed-report"
+    "start": "parcel ./src/index.html --open",
+    "build": "parcel build ./src/index.html --detailed-report"
   },
   "keywords": [
     "pokedex",
