@@ -17,6 +17,7 @@ export class HomePage {
     this.#indexDB = new IndexDBService();
     this.#fireBaseService = new FireBaseService();
     this.pokemons = [];
+    this.enableInfiniteScroll();
   }
 
   noPokemonsFound() {
@@ -37,6 +38,8 @@ export class HomePage {
   }
 
   async changePokemonRange({ start = 0, end = 898, searchTerm = "" }) {
+    this.disableInfiniteScroll();
+    if (start === 0 && end === 898) this.enableInfiniteScroll();
     const cachedArray = await this.#indexDB.get("pokemons");
     const generationSelected = cachedArray.slice(start, end);
     if (generationSelected.length === 0) await this.favoriteRange(generationSelected);
@@ -67,6 +70,28 @@ export class HomePage {
     selected.innerHTML = "Filter by Generation";
     return UtilsService.notificationAlert("error", "You must be logged");
   }
+  enableInfiniteScroll() {
+    let start = 20;
+    window.addEventListener("scroll", () => {
+      const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
+      if (endScroll) {
+        const previous = start;
+        start += 20;
+        this.createAndAppendPokemons(previous, start);
+      }
+    });
+  }
+
+  disableInfiniteScroll() {
+    window.removeEventListener("scroll", () => {
+      const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
+      if (endScroll) {
+        const previous = start;
+        start += 20;
+        this.createAndAppendPokemons(previous, start);
+      }
+    });
+  }
 
   updateScreen() {
     this.clearPokemons();
@@ -77,8 +102,9 @@ export class HomePage {
     this.pokemons = await this.#indexDB.get("pokemons");
   }
 
-  createAndAppendPokemons() {
-    this.pokemons.forEach((pokemon) => {
+  createAndAppendPokemons(previous = 0, start = 20) {
+    const splicedPokemons = this.pokemons.slice(previous, start);
+    splicedPokemons.forEach((pokemon) => {
       const $pokeCard = this.createPokemonCard(pokemon);
       UtilsService.fade($pokeCard);
       this.$pokemonsContent.append($pokeCard);
