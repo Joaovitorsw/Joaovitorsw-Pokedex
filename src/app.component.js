@@ -13,7 +13,7 @@ export class AppComponent {
     this.#loadingScreenService = new LoadingScreenService();
     this.#fireBaseService = new FireBaseService();
   }
-  async renderPage() {
+  renderPage() {
     $main.innerHTML = "";
     this.#loadingScreenService.LoadingPage();
 
@@ -22,10 +22,15 @@ export class AppComponent {
 
     const [fragment, param] = targetRoute.split("/");
     const hasParam = !!param;
-    await this.#pokeAPIService.requestPokemons();
-    const $html = hasParam ? await ROUTES[fragment].getTemplate(param) : await ROUTES[fragment].getTemplate();
-    $main.appendChild($html);
-    this.#loadingScreenService.removeLoadingScreen();
+    const page = hasParam ? new ROUTES[fragment](param) : new ROUTES[fragment]();
+
+    setTimeout(async () => {
+      await this.#pokeAPIService.requestPokemons();
+      const $html = await page.getTemplate();
+      $main.appendChild($html);
+      const timer = fragment === "home" ? 700 : 400;
+      this.#loadingScreenService.removeLoadingScreen(timer);
+    }, 400);
   }
 
   getTargetRoute(hash) {
@@ -38,7 +43,7 @@ export class AppComponent {
   }
 
   addWindowLoadListener() {
-    window.addEventListener("load", async () => {
+    window.addEventListener("load", () => {
       this.renderPage();
       this.addHashListener();
     });
