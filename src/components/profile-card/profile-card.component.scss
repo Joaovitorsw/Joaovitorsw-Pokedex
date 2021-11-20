@@ -96,7 +96,7 @@ profile-card {
       opacity: 0;
       position: absolute;
       font-size: 12px;
-      transform: translateX(10px);
+      transform: translateX(5px);
     }
   }
 
@@ -134,7 +134,7 @@ profile-card {
     }
     .img.logged {
       a {
-        transform: translateX(5px);
+        transform: translateX(10px);
       }
     }
   }

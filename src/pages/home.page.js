@@ -25,14 +25,13 @@ export class HomePage {
   showNotFoundMessage(event) {
     const index = event.length - 1;
     const hasItem = event[index].target.children.length > 0;
-
-    if (hasItem) return;
-
     const hasPokemon = event[index].addedNodes[0]?.tagName === "POKEMON-CARD";
     const hasError = event[index].addedNodes[0]?.classList.contains("search-error");
     const shouldAdd = hasError && !hasPokemon;
     const methodKeyName = shouldAdd ? "add" : "remove";
     this.$pokemonsContent.classList[methodKeyName]("search-error");
+
+    if (hasItem) return;
 
     const $errorCard = UtilsService.createElementWithClass("div", "search-error");
     $errorCard.innerHTML = `
@@ -105,8 +104,8 @@ export class HomePage {
 
     if (newNext) this.next = this.pokemons.length;
 
-    const splicedPokemons = this.pokemons.slice(this.previous, this.next);
-    splicedPokemons.forEach((pokemon) => {
+    const slicedPokemons = this.pokemons.slice(this.previous, this.next);
+    slicedPokemons.forEach((pokemon) => {
       const $pokeCard = this.createPokemonCard(pokemon);
       UtilsService.fade($pokeCard);
       this.$pokemonsContent.append($pokeCard);
