@@ -18,23 +18,30 @@ export class HomePage {
     this.#fireBaseService = new FireBaseService();
     this.pokemons = [];
     this.enableInfiniteScroll();
+    this.previous = 0;
+    this.next = 20;
   }
 
-  noPokemonsFound() {
-    this.clearPokemons();
-    this.$pokemonsContent.classList.add("search-error");
+  showNotFoundMessage(event) {
+    const index = event.length - 1;
+    const hasItem = event[index].target.children.length > 0;
+
+    if (hasItem) return;
+
+    const hasPokemon = event[index].addedNodes[0]?.tagName === "POKEMON-CARD";
+    const hasError = event[index].addedNodes[0]?.classList.contains("search-error");
+    const shouldAdd = hasError && !hasPokemon;
+    const methodKeyName = shouldAdd ? "add" : "remove";
+    this.$pokemonsContent.classList[methodKeyName]("search-error");
+
     const $errorCard = UtilsService.createElementWithClass("div", "search-error");
-    $errorCard.innerHTML = `   
+    $errorCard.innerHTML = `
             <h1>sorry</h1>
             <img>
             <p>Pokemon not found</p>
             `;
     UtilsService.fade($errorCard);
     this.$pokemonsContent.append($errorCard);
-  }
-  clearPokemons() {
-    this.$pokemonsContent.classList.remove("search-error");
-    this.$pokemonsContent.innerHTML = "";
   }
 
   async changePokemonRange({ start = 0, end = 898, searchTerm = "" }) {
@@ -52,8 +59,7 @@ export class HomePage {
     this.pokemons = sortedPokemons;
     this.previous = 0;
     this.next = 20;
-    const updateFn = (this.pokemons.length === 0 ? this.noPokemonsFound : this.updateScreen).bind(this);
-    updateFn();
+    this.updateScreen();
   }
 
   async favoriteRange(array) {
@@ -72,8 +78,6 @@ export class HomePage {
     return UtilsService.notificationAlert("error", "You must be logged");
   }
   enableInfiniteScroll() {
-    this.previous = 0;
-    this.next = 20;
     window.addEventListener("scroll", () => {
       const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
       if (endScroll) {
@@ -85,7 +89,7 @@ export class HomePage {
   }
 
   updateScreen() {
-    this.clearPokemons();
+    this.$pokemonsContent.innerHTML = "";
     this.createAndAppendPokemons();
   }
 
@@ -96,15 +100,21 @@ export class HomePage {
   createAndAppendPokemons() {
     const maxNext = this.next === this.pokemons.length;
     const newNext = this.next > this.pokemons.length;
+
     if (maxNext) return;
+
     if (newNext) this.next = this.pokemons.length;
+
     const splicedPokemons = this.pokemons.slice(this.previous, this.next);
     splicedPokemons.forEach((pokemon) => {
       const $pokeCard = this.createPokemonCard(pokemon);
       UtilsService.fade($pokeCard);
       this.$pokemonsContent.append($pokeCard);
     });
+
     this.#fireBaseService.start();
+
+    this.changeEvent(this.$pokemonsContent, this.showNotFoundMessage.bind(this));
   }
 
   createPokemonCard(pokemon) {
@@ -113,12 +123,18 @@ export class HomePage {
     pokemonCard.setAttribute("pokemon", pokemonJson);
     return pokemonCard;
   }
+
+  changeEvent($element, callback) {
+    const observer = new MutationObserver((mutations) => {
+      callback(mutations);
+    });
+    observer.observe($element, { childList: true });
+  }
   async getTemplate() {
     const $homepage = UtilsService.createElementWithClass("div", "homepage");
 
     const $pokemonsContent = UtilsService.createElementWithClass("div", "pokemons-content");
     this.$pokemonsContent = $pokemonsContent;
-
     await this.getPokemonsFromCache();
     this.createAndAppendPokemons();
 

@@ -139,23 +139,7 @@ export class FireBaseService {
       $favStars.forEach(($star) => {
         $star.observable$.subscribe((boolean) => {
           const $pokemonCard = $star.parentElement.parentElement;
-          const $pokemonContent = $pokemonCard.parentElement;
-          const pokemonCardList = $pokemonContent.querySelectorAll("pokemon-card");
-
           if (!boolean) $pokemonCard.remove();
-
-          if (pokemonCardList.length === 1) {
-            $pokemonContent.classList.add("search-error");
-            const $errorCard = UtilsService.createElementWithClass("div", "search-error");
-            $errorCard.innerHTML = `   
-            <h1>sorry</h1>
-            <img>
-            <p>Pokemon not found</p>
-            `;
-            UtilsService.fade($errorCard);
-            $pokemonContent.append($errorCard);
-            return;
-          }
         });
       });
     }
