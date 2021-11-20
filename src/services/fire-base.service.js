@@ -132,7 +132,7 @@ export class FireBaseService {
         }
       });
     });
-    const favPage = document.querySelector(".selected h1").innerText === "Favorite Pokemons";
+    const favPage = document.querySelector(".selected h1")?.innerText === "Favorite Pokemons";
 
     if (favPage) {
       const $favStars = document.querySelectorAll("fav-star");
