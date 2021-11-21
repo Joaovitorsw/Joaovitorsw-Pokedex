@@ -143,7 +143,7 @@ export class HomePage {
 
   removePokemonsController() {
     const $profileCard = document.querySelector("profile-card");
-    $profileCard.updated$.subscribe(() => {
+    $profileCard?.updated$.subscribe(() => {
       this.resetFilter();
     });
     const favPage = document.querySelector(".selected h1")?.innerText === "Favorite Pokemons";
