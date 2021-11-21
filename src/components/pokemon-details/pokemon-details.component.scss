@@ -268,22 +268,45 @@ tbody {
 }
 
 pokemon-details {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   font-family: "Jura", sans-serif;
-  justify-content: center;
-
-  padding: 10px 20px;
-  border-radius: 5px 5px 0px 0px;
-  @media screen and (max-width: 320px) {
-    padding: 0px;
-  }
-
   back-arrow {
-    margin-bottom: 10px;
-    align-self: flex-start;
+    position: absolute;
+    bottom: 0;
+  }
+  tabs-component {
+    height: 100%;
+
+    @media screen and (min-width: 400px) {
+      .tab.active:nth-child(4) {
+        overflow: auto;
+        max-height: 370px;
+      }
+    }
+
+    @media screen and (min-height: 800px) {
+      .tab.active:nth-child(4) {
+        overflow: auto;
+        max-height: 460px;
+      }
+    }
+    @media screen and (max-width: 360px) {
+      .tab.active:nth-child(4) {
+        overflow: auto;
+        max-height: 290px;
+      }
+    }
+    @media screen and (max-width: 320px) {
+      .tab.active:nth-child(4) {
+        overflow: auto;
+        max-height: 190px;
+      }
+    }
+    @media screen and (max-width: 280px) {
+      .tab.active:nth-child(4) {
+        overflow: auto;
+        max-height: 280px;
+      }
+    }
   }
 
   & .pokemon-image {
@@ -298,6 +321,7 @@ pokemon-details {
   }
 }
 .pokemon-card {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -335,5 +359,29 @@ pokemon-details {
   h2 {
     font-weight: 800;
     max-height: 30px;
+  }
+}
+@media screen and (min-width: 600px) {
+  pokemon-details {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Jura", sans-serif;
+    justify-content: center;
+
+    padding: 10px 20px;
+    border-radius: 5px 5px 0px 0px;
+
+    back-arrow {
+      position: relative;
+      align-self: flex-start;
+      margin-bottom: 20px;
+      bottom: 0;
+    }
+    .pokemon-card,
+    tabs-component {
+      height: auto;
+    }
   }
 }
