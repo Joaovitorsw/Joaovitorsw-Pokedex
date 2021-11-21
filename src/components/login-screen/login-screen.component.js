@@ -120,7 +120,7 @@ export class LoginScreenComponent extends HTMLElement {
   buttonEnable() {
     const $buttonRegister = this.querySelector(".register-form button");
     const $buttonLogin = this.querySelector(".login-form button");
-    const validLogin = !this.#validators.email && this.#validators.password;
+    const validLogin = !(this.#validators.email && this.#validators.password);
     const validRegister = !this.#validators.isValidAllProperties();
     $buttonRegister.disabled = validRegister;
     $buttonLogin.disabled = validLogin;
