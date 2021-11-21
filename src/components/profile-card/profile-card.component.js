@@ -1,4 +1,5 @@
 import { $main } from "../../app.component";
+import { Observable } from "../../classes/observable";
 import { LoginScreenComponent } from "../login-screen/login-screen.component";
 import profileCardTemplate from "./profile-card.component.html";
 import profileCardStyle from "./profile-card.component.scss";
@@ -7,6 +8,7 @@ export class ProfileCardComponent extends HTMLElement {
   constructor() {
     super();
     this.declarations = [LoginScreenComponent];
+    this.updated$ = new Observable();
     this.defaultImg = require("../../assets/images/pokemon-trainer-pokemon.svg");
   }
 
@@ -21,6 +23,7 @@ export class ProfileCardComponent extends HTMLElement {
     this.$name.innerText = "Trainer";
     this.$img = document.querySelector(".img");
     this.$loginScreen = document.createElement("login-screen");
+    this.$loginScreen.enableFireBase();
 
     this.$loginScreen.addEventListener("login-event", (event) => {
       this.update(event.detail.displayName, event.detail.photoURL);
@@ -33,8 +36,8 @@ export class ProfileCardComponent extends HTMLElement {
       this.$loginScreen.logoff();
       this.setLogin();
       this.update("Trainer", this.defaultImg);
+      this.updated$.publish();
     });
-    this.$loginScreen.startFireBase();
   }
 
   setLogin() {
