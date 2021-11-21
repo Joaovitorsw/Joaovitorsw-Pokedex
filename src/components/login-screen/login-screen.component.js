@@ -1,226 +1,131 @@
+import { Validators } from "../../classes/validator.js";
 import { FireBaseService } from "../../services/fire-base.service.js";
 import { UtilsService } from "../../services/utils.service.js";
-import { loginScreenStyle } from "../login-screen/login-screen.component.scss";
+import loginScreenTemplate from "../login-screen/login-screen.component.html";
+import loginScreenStyle from "../login-screen/login-screen.component.scss";
 export class LoginScreenComponent extends HTMLElement {
   #fireBaseService;
-  #name;
-  #email;
-  #password;
-  #passwordMatch;
-
+  #validators;
   constructor() {
     super();
-    this.#name = false;
-    this.#email = false;
-    this.#password = false;
-    this.#passwordMatch = false;
     this.$html = document.documentElement;
-    this.#fireBaseService = new FireBaseService(this);
+    this.#validators = new Validators();
+    this.#fireBaseService = new FireBaseService();
+    this.#fireBaseService.login$.subscribe(() => this.removeScreen());
     this.#fireBaseService.profile$.subscribe(({ displayName, photoURL }) => {
-      const myEvent = new CustomEvent("login-event", {
-        detail: { displayName, photoURL },
+      const hasLogin = new CustomEvent("login-event", {
+        detail: {
+          displayName,
+          photoURL,
+        },
       });
-      this.dispatchEvent(myEvent);
+      this.dispatchEvent(hasLogin);
     });
   }
 
-  startFireBase() {
+  enableFireBase() {
     this.#fireBaseService.start();
   }
 
   removeScreen() {
-    this.innerHTML = "";
     this.$html.classList.remove("login");
     const $loginScreen = document.querySelector("login-screen");
     $loginScreen.remove();
   }
   connectedCallback() {
-    this.innerHTML = "";
     const style = loginScreenStyle;
-    this.#createButton();
-    this.#createForm();
-    UtilsService.fade(this);
+    const img = require("../../assets/images/icons8-insignia-3-stars-96.png");
+    const template = UtilsService.bindModelToView({ img }, loginScreenTemplate);
+    this.innerHTML = template;
     this.$html.classList.add("login");
-    this.#buttonEnable();
-    this.startFireBase();
+    this.setListeners();
   }
 
-  #createButton() {
-    const $button = UtilsService.createElementWithClass("button", "exit");
-    $button.innerText = "X";
-    $button.addEventListener("click", () => this.removeScreen());
-    this.append($button);
-  }
-  #createForm() {
-    const $form = UtilsService.createElementWithClass("div", "form");
-    const image = require("../../assets/images/icons8-insignia-3-stars-96.png");
-    $form.innerHTML = `
-    <div class="thumbnail">
-    <img src="${image}" />
-    </div>
-    `;
-    const $registerForm = this.#generateRegisterForm();
-    const $loginForm = this.#generateLoginForm();
-    $form.append($registerForm);
-    $form.append($loginForm);
-    this.append($form);
-  }
-
-  #generateLoginForm() {
-    const $loginForm = UtilsService.createElementWithClass("form", "login-form");
-
-    const $inputEmail = UtilsService.createInputWithTypeAndPlaceholder("email", "Email address");
-    const $errorEmail = UtilsService.createInputError("form-error", "Invalid email address");
-    const mailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    $inputEmail.addEventListener("input", () => this.#regexIsValid($inputEmail, mailPattern, "#email"), 500);
-
-    $loginForm.append($inputEmail);
-    $loginForm.append($errorEmail);
-
-    const $inputPassword = UtilsService.createInputWithTypeAndPlaceholder("password", "Password");
-    const $errorPassword = UtilsService.createInputError("form-error", "Invalid password");
-    const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{9,16}$/;
-
-    $inputPassword.addEventListener("input", () => this.#regexIsValid($inputPassword, passwordPattern, "#password"));
-
-    $loginForm.append($inputPassword);
-    $loginForm.append($errorPassword);
-
-    const $button = UtilsService.createElementWithClass("button", "submit");
-    $button.innerText = "Login";
-    $button.addEventListener("click", () => {
-      if (this.#email && this.#password) {
-        const email = $inputEmail.value;
-        const password = $inputPassword.value;
-        this.#fireBaseService.login(email, password);
-      }
+  setListeners() {
+    const $exitButton = this.querySelector(".exit");
+    $exitButton.addEventListener("click", () => this.removeScreen());
+    const $loginEmail = this.querySelector(".login-form input[type=email]");
+    const $loginPassword = this.querySelector(".login-form input[type=password]");
+    const $loginA = this.querySelector(".login-form a");
+    const $loginSubmit = this.querySelector(".login-form .submit");
+    $loginEmail.addEventListener("input", () => {
+      this.#validators.isValidEmail($loginEmail.value);
+      UtilsService.elementClassToggleWithCondition($loginEmail, "invalid", !this.#validators.email);
+      this.buttonEnable();
     });
-    $button.disabled = true;
-    const $p = UtilsService.createElementWithClass("p", "message");
-    $p.innerText = `Not registered?`;
-    const $a = document.createElement("a");
-    $a.innerText = "Create an account";
-    $a.addEventListener("click", () => {
-      this.#changeForm("none", "flex");
+    $loginPassword.addEventListener("input", () => {
+      this.#validators.isValidPassword($loginPassword.value);
+      UtilsService.elementClassToggleWithCondition($loginPassword, "invalid", !this.#validators.password);
+      this.buttonEnable();
     });
-
-    $loginForm.append($button);
-    $p.append($a);
-    $loginForm.append($p);
-
-    return $loginForm;
-  }
-
-  #generateRegisterForm() {
-    const $inputText = UtilsService.createInputWithTypeAndPlaceholder("text", "Name");
-    const $errorText = UtilsService.createInputError("form-error", "Name is incorrect");
-    const $registerForm = UtilsService.createElementWithClass("form", "register-form");
-    const namePattern = /[A-Z][a-z]* [A-Z][a-z]*/;
-
-    $inputText.addEventListener("input", () => this.#regexIsValid($inputText, namePattern, "#name"), 500);
-
-    $registerForm.append($inputText);
-    $registerForm.append($errorText);
-
-    const $inputEmail = UtilsService.createInputWithTypeAndPlaceholder("email", "Email address");
-    const $errorEmail = UtilsService.createInputError("form-error", "Invalid email address");
-    const mailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    $inputEmail.addEventListener("input", () => this.#regexIsValid($inputEmail, mailPattern, "#email"), 500);
-
-    $registerForm.append($inputEmail);
-    $registerForm.append($errorEmail);
-
-    const $inputPassword = UtilsService.createInputWithTypeAndPlaceholder("password", "Password");
-    const $errorPassword = UtilsService.createInputError("form-error", "Invalid password");
-    const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{9,16}$/;
-
-    $inputPassword.addEventListener("input", () => this.#regexIsValid($inputPassword, passwordPattern, "#password"));
-
-    $registerForm.append($inputPassword);
-    $registerForm.append($errorPassword);
-
-    const $inputConfirmPassword = UtilsService.createInputWithTypeAndPlaceholder("password", "Confirm Password");
-    const $errorConfirmPassword = UtilsService.createInputError("form-error", "Passwords do not match");
-
-    $inputConfirmPassword.addEventListener(
-      "input",
-      () => this.#passwordIsValid($inputConfirmPassword, $inputPassword, "#passwordMatch"),
-      500
+    $loginA.addEventListener("click", () => this.changeForm("none", "flex"));
+    $loginSubmit.addEventListener(
+      "click",
+      UtilsService.throttleEvent(() => {
+        const valideUser = this.#validators.email && this.#validators.password;
+        if (valideUser) {
+          const email = $loginEmail.value;
+          const password = $loginPassword.value;
+          this.#fireBaseService.login(email, password);
+        }
+      }, 3000)
     );
-    const $button = UtilsService.createElementWithClass("button", "submit");
-    $button.innerText = "Create";
-    $button.disabled = true;
-    $button.addEventListener("click", () => {
-      if (this.#name && this.#email && this.#password && this.#passwordMatch) {
-        const name = $inputText.value;
-        const email = $inputEmail.value;
-        const password = $inputPassword.value;
-        this.#fireBaseService.register(name, email, password);
-      }
+    const $registerEmail = this.querySelector(".register-form input[type=email]");
+    const [$registerPassword, $registerMatchPassword] = this.querySelectorAll(".register-form input[type=password]");
+    const $registerName = this.querySelector(".register-form input[type=text]");
+    const $registerA = this.querySelector(".register-form a");
+    const $registerSubmit = this.querySelector(".register-form .submit");
+    $registerEmail.addEventListener("input", () => {
+      this.#validators.isValidEmail($registerEmail.value);
+      UtilsService.elementClassToggleWithCondition($registerEmail, "invalid", !this.#validators.email);
+      this.buttonEnable();
     });
-    const $p = UtilsService.createElementWithClass("p", "message");
-    $p.innerText = `Already registered?`;
-    const $a = document.createElement("a");
-    $a.innerText = "Sign In";
-    $a.addEventListener("click", () => {
-      this.#changeForm("flex", "none");
+    $registerPassword.addEventListener("input", () => {
+      this.#validators.isValidPassword($registerPassword.value);
+      UtilsService.elementClassToggleWithCondition($registerPassword, "invalid", !this.#validators.password);
+      this.buttonEnable();
     });
-
-    $registerForm.append($inputConfirmPassword);
-    $registerForm.append($errorConfirmPassword);
-    $registerForm.append($button);
-    $p.append($a);
-    $registerForm.append($p);
-
-    return $registerForm;
+    $registerMatchPassword.addEventListener("input", () => {
+      this.#validators.passwordIsMatch($registerMatchPassword.value, $registerPassword.value);
+      UtilsService.elementClassToggleWithCondition($registerMatchPassword, "invalid", !this.#validators.passwordMatch);
+      this.buttonEnable();
+    });
+    $registerName.addEventListener("input", () => {
+      this.#validators.isValidName($registerName.value);
+      UtilsService.elementClassToggleWithCondition($registerName, "invalid", !this.#validators.name);
+      this.buttonEnable();
+    });
+    $registerA.addEventListener("click", () => this.changeForm("flex", "none"));
+    $registerSubmit.addEventListener(
+      "click",
+      UtilsService.throttleEvent(() => {
+        const valideUser = this.#validators.email && this.#validators.password && this.#validators.name;
+        if (valideUser) {
+          const email = $registerEmail.value;
+          const password = $registerPassword.value;
+          const name = $registerName.value;
+          this.#fireBaseService.register(email, password, name);
+        }
+      }, 3000)
+    );
   }
 
-  #changeForm(display1, display2) {
+  changeForm(display1, display2) {
     const $registerForm = this.querySelector(".register-form");
     const $loginForm = this.querySelector(".login-form");
-
     $loginForm.style.display = display1;
     $registerForm.style.display = display2;
   }
 
-  #buttonEnable() {
+  buttonEnable() {
     const $buttonRegister = this.querySelector(".register-form button");
     const $buttonLogin = this.querySelector(".login-form button");
-    $buttonRegister.disabled = true;
-    $buttonLogin.disabled = true;
-    const valid = this.#email && this.#password;
-    if (valid) $buttonLogin.disabled = false;
-    if (valid && this.#passwordMatch && this.#name) $buttonRegister.disabled = false;
-  }
-
-  #regexIsValid($input, pattern, property) {
-    const validate = {
-      "#name": () => (this.#name = isValid),
-      "#email": () => (this.#email = isValid),
-      "#password": () => (this.#password = isValid),
-    };
-    $input.classList.add("invalid");
-    const isValid = pattern.test($input.value);
-    if (isValid) {
-      $input.classList.remove("invalid");
-    }
-    validate[property]();
-    this.#buttonEnable();
-  }
-
-  #passwordIsValid($input, $inputConfirmPassword, property) {
-    const validate = {
-      "#passwordMatch": () => (this.#passwordMatch = isValid),
-    };
-    $input.classList.add("invalid");
-    const isValid = $input.value === $inputConfirmPassword.value;
-    if (isValid) {
-      $input.classList.remove("invalid");
-    }
-
-    validate[property]();
-    this.#buttonEnable();
+    const validLogin = !this.#validators.email && this.#validators.password;
+    const validRegister = !this.#validators.isValidAllProperties();
+    $buttonRegister.disabled = validRegister;
+    $buttonLogin.disabled = validLogin;
+    if (validLogin) $buttonLogin.disabled = validLogin;
+    if (validRegister) $buttonRegister.disabled = validRegister;
   }
 
   logoff() {
