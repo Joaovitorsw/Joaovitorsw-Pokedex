@@ -33,7 +33,23 @@ export class TabsComponent extends HTMLElement {
     this.observable$.subscribe(async ([imagePath, id]) => {
       const $firstForm = this.querySelectorAll(".first-form img");
       const $secondForm = this.querySelectorAll(".second-form img");
-      const { chain } = await this.#pokeAPIService.getEvolutionChain(pokemon.id);
+      const evolutionMap = await this.#pokeAPIService.getEvolutionChain(pokemon.id);
+      const { chain } = evolutionMap;
+      const EeveeID = evolutionMap.id === 67;
+
+      if (EeveeID) {
+        $firstForm.forEach((_, index, array) => {
+          const calculatedIndex = (index - 1) / 2;
+          const evolutionIndex = Math.ceil(calculatedIndex);
+          const eeveeForms = evolutionMap.chain.evolves_to[evolutionIndex].species.name;
+          const imgPath = imagePath.replace(id, POKE_KEYS[eeveeForms]);
+          const isEevee = !(index % 2);
+          const path = isEevee ? imagePath : imgPath;
+          array[index].setAttribute("src", path);
+        });
+        return;
+      }
+
       const firstForm = chain.species.name;
       const firstImage = imagePath.replace(id, POKE_KEYS[firstForm]);
       const secondForm = chain.evolves_to[0]?.species.name;
