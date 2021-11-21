@@ -13,13 +13,8 @@ import { Observable } from "../classes/observable.js";
 import { UtilsService } from "./utils.service.js";
 
 export class FireBaseService {
-  notConnected;
-  userName;
-  userPhotoUrl;
-  #loginScreenService;
-
-  constructor(loginScreenService) {
-    this.#loginScreenService = loginScreenService;
+  constructor() {
+    this.login$ = new Observable();
     this.profile$ = new Observable();
   }
 
@@ -45,10 +40,7 @@ export class FireBaseService {
   hasLogin() {
     const auth = getAuth();
     onAuthStateChanged(auth, () => {
-      if (auth.currentUser) {
-        this.profile$.publish(auth.currentUser);
-        this.getFavoritesPokemons();
-      }
+      if (auth.currentUser) this.profile$.publish(auth.currentUser);
     });
   }
 
@@ -59,7 +51,7 @@ export class FireBaseService {
       .then(() => {
         UtilsService.notificationAlert("success", "Successful login");
         this.profile$.publish(auth.currentUser);
-        this.#loginScreenService.removeScreen();
+        this.login$.publish();
       })
       .catch(() => {
         UtilsService.notificationAlert("error", "Failed to login");
@@ -70,13 +62,11 @@ export class FireBaseService {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then(async () => {
-        UtilsService.notificationAlert("success", "Successful registration");
-        updateProfile(auth.currentUser, { displayName: name }).then(() => {
-          const $profile = document.querySelector("profile-card");
-          const photo = require("../assets/images/pokemon-trainer-pokemon.svg");
-          $profile.update(auth.currentUser.displayName, photo);
+        const photo = require("../assets/images/pokemon-trainer-pokemon.svg");
+        updateProfile(auth.currentUser, { displayName: name, photoURL: photo }).then(() => {
+          UtilsService.notificationAlert("success", "Successful registration");
+          this.login$.publish();
         });
-        this.#loginScreenService.removeScreen();
       })
       .catch(() => {
         UtilsService.notificationAlert("error", "Failed to register");
@@ -115,35 +105,13 @@ export class FireBaseService {
     try {
       await addDoc(favoritesCollection, pokemon);
     } catch (error) {
-      alert(`Error adding document:${error}`);
+      UtilsService.notificationAlert("error", `Error adding document:${error}`);
     }
   }
 
   async getFavoritesPokemons() {
     const favoritesCollection = this.getFavoritePath();
     const querySnapshot = await getDocs(favoritesCollection);
-    querySnapshot.forEach((doc) => {
-      const pokemon = doc.data();
-      const $allCards = document.querySelectorAll("pokemon-card");
-      $allCards.forEach(($card) => {
-        if ($card.pokemonID === pokemon.id) {
-          const favPokemons = $card.querySelector("fav-star");
-          favPokemons.querySelector(".fav-content").classList.add("active");
-        }
-      });
-    });
-    const favPage = document.querySelector(".selected h1")?.innerText === "Favorite Pokemons";
-
-    if (favPage) {
-      const $favStars = document.querySelectorAll("fav-star");
-      $favStars.forEach(($star) => {
-        $star.observable$.subscribe((boolean) => {
-          const $pokemonCard = $star.parentElement.parentElement;
-          if (!boolean) $pokemonCard.remove();
-        });
-      });
-    }
-
     return querySnapshot;
   }
 
@@ -151,7 +119,7 @@ export class FireBaseService {
     const auth = getAuth();
     const db = getFirestore();
     const userCollectionReference = collection(db, "users");
-    const userReference = doc(userCollectionReference, auth.currentUser.uid);
+    const userReference = doc(userCollectionReference, auth.currentUser?.uid);
     const favoritesCollection = collection(userReference, "favorites");
     return favoritesCollection;
   }
@@ -165,15 +133,6 @@ export class FireBaseService {
       const documentRef = doc(favoritesCollection, document.id);
       if (isThePokemon) return deleteDoc(documentRef);
     });
-  }
-
-  removeStars() {
-    const stars = document.querySelectorAll(".fav-content");
-    stars.forEach((star) => star.classList.remove("active"));
-    const menu = document.querySelector("menu-gen");
-    const selected = document.querySelector(".selected h1");
-    menu.selectOption$.publish({ start: 0, end: 898 });
-    selected.innerHTML = "Filter by Generation";
   }
 
   uploadImage(url) {
@@ -197,6 +156,5 @@ export class FireBaseService {
       .catch((error) => {
         UtilsService.notificationAlert("error", "An error happened");
       });
-    this.removeStars();
   }
 }

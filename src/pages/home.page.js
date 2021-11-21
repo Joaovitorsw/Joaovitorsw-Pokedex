@@ -19,7 +19,7 @@ export class HomePage {
     this.pokemons = [];
     this.enableInfiniteScroll();
     this.previous = 0;
-    this.next = 20;
+    this.next = 21;
   }
 
   showNotFoundMessage(event) {
@@ -57,7 +57,7 @@ export class HomePage {
     const sortedPokemons = pokemons.sort((a, b) => a.id - b.id);
     this.pokemons = sortedPokemons;
     this.previous = 0;
-    this.next = 20;
+    this.next = 21;
     this.updateScreen();
   }
 
@@ -70,10 +70,10 @@ export class HomePage {
       });
       return;
     }
-    const menu = document.querySelector("menu-gen");
-    const selected = document.querySelector(".selected h1");
-    menu.selectOption$.publish();
-    selected.innerHTML = "Filter by Generation";
+    const $menu = document.querySelector("menu-gen");
+    const $selected = document.querySelector(".selected h1");
+    $menu.selectOption$.publish();
+    $selected.innerHTML = "Filter by Generation";
     return UtilsService.notificationAlert("error", "You must be logged");
   }
   enableInfiniteScroll() {
@@ -81,10 +81,19 @@ export class HomePage {
       const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
       if (endScroll) {
         this.previous = this.next;
-        this.next += 20;
+        this.next += 21;
         this.createAndAppendPokemons(this.previous, this.next);
       }
     });
+  }
+
+  resetFilter() {
+    const stars = document.querySelectorAll(".fav-content");
+    stars.forEach((star) => star.classList.remove("active"));
+    const menu = document.querySelector("menu-gen");
+    const selected = document.querySelector(".selected h1");
+    menu.selectOption$.publish({ start: 0, end: 898 });
+    selected.innerHTML = "Filter by Generation";
   }
 
   updateScreen() {
@@ -114,6 +123,39 @@ export class HomePage {
     this.#fireBaseService.start();
 
     this.changeEvent(this.$pokemonsContent, this.showNotFoundMessage.bind(this));
+    this.changeEvent(this.$pokemonsContent, this.removePokemonsController.bind(this));
+    this.#fireBaseService.profile$.subscribe(() => {
+      const activeStar = ($card) => {
+        const $favPokemons = $card.querySelector("fav-star .fav-content");
+        $favPokemons.classList.add("active");
+      };
+      this.#fireBaseService.getFavoritesPokemons().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const pokemon = doc.data();
+          const $allCards = document.querySelectorAll("pokemon-card");
+          $allCards.forEach(($card) => {
+            if ($card.pokemonID === pokemon.id) activeStar($card);
+          });
+        });
+      });
+    });
+  }
+
+  removePokemonsController() {
+    const $profileCard = document.querySelector("profile-card");
+    $profileCard.updated$.subscribe(() => {
+      this.resetFilter();
+    });
+    const favPage = document.querySelector(".selected h1")?.innerText === "Favorite Pokemons";
+    if (favPage) {
+      const $favStars = document.querySelectorAll("fav-star");
+      $favStars.forEach(($star) => {
+        $star.observable$.subscribe((boolean) => {
+          const $pokemonCard = $star.parentElement.parentElement;
+          if (!boolean) $pokemonCard.remove();
+        });
+      });
+    }
   }
 
   createPokemonCard(pokemon) {

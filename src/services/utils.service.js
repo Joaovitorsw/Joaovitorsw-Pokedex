@@ -10,6 +10,11 @@ export class UtilsService {
     return $element;
   }
 
+  static elementClassToggleWithCondition($element, className, condition) {
+    const methodKeyName = condition ? "add" : "remove";
+    $element.classList[methodKeyName](className);
+  }
+
   static getPokemonTypes(pokemon) {
     const types = pokemon.types.map((types) => types.type.name);
     return types;
@@ -87,8 +92,6 @@ export class UtilsService {
       }
     };
   }
-
-  static findPokemonIDinUrl() {}
 
   static getPokeImageUrl = (pokeName, isShine) => {
     const pokemonID = POKE_KEYS[pokeName];
