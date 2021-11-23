@@ -29,7 +29,6 @@ pokemon-details {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    border-radius: 5px;
     max-width: 620px;
 
     h2 {
@@ -143,6 +142,9 @@ pokemon-details {
 
       position: relative;
       align-self: flex-start;
+    }
+    .pokemon-card {
+      border-radius: 5px;
     }
     .pokemon-card,
     tabs-component {
