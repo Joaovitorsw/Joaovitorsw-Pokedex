@@ -1,6 +1,7 @@
 import { Observable } from "../../classes/observable";
 import { UtilsService } from "../../services/utils.service";
-import searchStyle from "./search-bar.component.scss";
+import { searchTemplate } from "./search-bar.component.html";
+import { searchStyle } from "./search-bar.component.scss";
 
 export class SearchBarComponent extends HTMLElement {
   constructor() {
@@ -9,12 +10,11 @@ export class SearchBarComponent extends HTMLElement {
   }
   connectedCallback() {
     const style = searchStyle;
+    const img = require("../../assets/images/search-bar-icon.svg");
 
-    const $searchBar = UtilsService.createElementWithClass("div", "search-bar");
-    const $searchBarIcon = UtilsService.createElementWithClass("img", "search-bar-icon");
-    $searchBarIcon.setAttribute("alt", "search-bar-icon");
-    const $searchBarInput = UtilsService.createElementWithClass("input", "search-bar-input");
-    $searchBarInput.setAttribute("type", "text");
+    const template = UtilsService.bindModelToView({ img }, searchTemplate);
+    this.innerHTML = template;
+    const $searchBarInput = this.querySelector(".search-bar-input");
     $searchBarInput.addEventListener("change", (event) => {
       const hasValueInput = event.target.value !== "";
       const classFn = hasValueInput ? UtilsService.elementClassAdd : UtilsService.elementClassRemove;
@@ -27,12 +27,6 @@ export class SearchBarComponent extends HTMLElement {
         this.searchTerm$.publish(userText);
       }, 800)
     );
-    const $searchBarLabel = UtilsService.createElementWithClass("label", "search-bar-label");
-    $searchBarLabel.innerHTML = "Search for pokemon...";
-    $searchBar.append($searchBarIcon);
-    $searchBar.append($searchBarInput);
-    $searchBar.append($searchBarLabel);
-    this.append($searchBar);
   }
 }
 
