@@ -120,6 +120,7 @@ export class HomePage {
       this.$pokemonsContent.append($pokeCard);
     });
     this.#fireBaseService.start();
+
     this.#fireBaseService.profile$.subscribe(() => {
       const activeStar = ($card) => {
         const $favPokemons = $card.querySelector("fav-star .fav-content");
@@ -137,11 +138,14 @@ export class HomePage {
     });
   }
 
-  removePokemonsController() {
+  removeStars() {
     const $profileCard = document.querySelector("profile-card");
     $profileCard?.updated$.subscribe(() => {
       this.resetFilter();
     });
+  }
+
+  removePokemonsFav() {
     const favPage = document.querySelector(".selected h1")?.innerText === "Favorite Pokemons";
     if (favPage) {
       const $favStars = document.querySelectorAll("fav-star");
@@ -180,6 +184,9 @@ export class HomePage {
     const $searchBar = document.createElement("search-bar");
     const $menu = document.createElement("menu-gen");
     const $profileCard = document.createElement("profile-card");
+    this.changeEvent(this.$pokemonsContent, this.showNotFoundMessage.bind(this));
+    this.changeEvent(this.$pokemonsContent, this.removePokemonsFav.bind(this));
+    this.changeEvent($profileCard, this.removeStars.bind(this));
 
     $menu.selectOption$.subscribe((selectedOption) => {
       this.#selectedGenerationOption = selectedOption;
@@ -192,9 +199,6 @@ export class HomePage {
       const selectedOption = this.#selectedGenerationOption;
       this.changePokemonRange({ ...selectedOption, searchTerm });
     });
-
-    this.changeEvent(this.$pokemonsContent, this.showNotFoundMessage.bind(this));
-    this.changeEvent(this.$pokemonsContent, this.removePokemonsController.bind(this));
 
     $navigationContent.append($searchBar);
     $navigationContent.append($profileCard);
