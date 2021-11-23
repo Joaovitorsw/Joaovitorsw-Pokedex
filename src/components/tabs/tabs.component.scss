@@ -65,7 +65,7 @@ tabs-component {
 
   .tab {
     display: none;
-    animation: fade 1s, slide-out 0.5s ease;
+    animation: fade 1s, slide-out 0.5s ease backwards;
 
     &.active {
       display: block;
