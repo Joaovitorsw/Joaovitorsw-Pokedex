@@ -8,6 +8,4 @@ export class SettingsPage {
     const $settingsPage = document.createElement("user-settings");
     return $settingsPage;
   }
-
-  resetPage() {}
 }

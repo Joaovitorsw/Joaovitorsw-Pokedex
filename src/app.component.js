@@ -14,8 +14,7 @@ export class AppComponent {
     this.#fireBaseService = new FireBaseService();
   }
   renderPage() {
-    this.#actuallyInstancy?.resetPage();
-    $main.innerHTML = "";
+    this.reset();
     this.#loadingScreen = document.createElement("loading-screen");
     this.#loadingScreen.loadingPage();
 
@@ -33,6 +32,11 @@ export class AppComponent {
       const timer = fragment === "home" ? 700 : 400;
       this.#loadingScreen.removeLoadingScreen(timer);
     }, 400);
+  }
+
+  reset() {
+    $main.innerHTML = "";
+    window.removeEventListener("scroll", this.#actuallyInstancy?.infinityScrollFn);
   }
 
   getTargetRoute(hash) {

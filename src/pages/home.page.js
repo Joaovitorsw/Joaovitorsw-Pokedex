@@ -17,8 +17,8 @@ export class HomePage {
     this.#indexDB = new IndexDBService();
     this.#fireBaseService = new FireBaseService();
     this.pokemons = [];
-    this.infinityScroll = true;
-    this.enableInfiniteScroll();
+    this.infinityScrollFn = this.#infinityScroll.bind(this);
+    window.addEventListener("scroll", this.infinityScrollFn);
     this.previous = 0;
     this.next = 21;
   }
@@ -77,20 +77,13 @@ export class HomePage {
     $selected.innerHTML = "Filter by Generation";
     return UtilsService.notificationAlert("error", "You must be logged");
   }
-  enableInfiniteScroll() {
-    window.addEventListener("scroll", () => {
-      if (this.infinityScroll) return;
-      const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
-      if (endScroll) {
-        this.previous = this.next;
-        this.next += 21;
-        this.createAndAppendPokemons(this.previous, this.next);
-      }
-    });
-  }
-
-  resetPage() {
-    this.infinityScroll = true;
+  #infinityScroll() {
+    const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
+    if (endScroll) {
+      this.previous = this.next;
+      this.next += 21;
+      this.createAndAppendPokemons(this.previous, this.next);
+    }
   }
 
   resetFilter() {
@@ -142,7 +135,6 @@ export class HomePage {
         });
       });
     });
-    this.infinityScroll = false;
   }
 
   removeStars() {
