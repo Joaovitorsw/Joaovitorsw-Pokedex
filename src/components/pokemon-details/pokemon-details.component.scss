@@ -1,10 +1,12 @@
 pokemon-details {
+  display: flex;
+  flex-direction: column-reverse;
   font-family: "Jura", sans-serif;
 
   back-arrow {
-    padding-top: 10px;
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    padding-top: 5px;
+    background-color: white;
   }
   tabs-component {
     height: 100%;
@@ -22,7 +24,7 @@ pokemon-details {
   }
 
   .pokemon-card {
-    height: 100%;
+    height: 94vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -136,8 +138,9 @@ pokemon-details {
     border-radius: 5px 5px 0px 0px;
 
     back-arrow {
-      padding-left: 15px;
-      padding-bottom: 15px;
+      padding: 15px;
+      background-color: unset;
+
       position: relative;
       align-self: flex-start;
     }
