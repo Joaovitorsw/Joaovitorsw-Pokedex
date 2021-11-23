@@ -18,7 +18,6 @@ export class HomePage {
     this.#fireBaseService = new FireBaseService();
     this.pokemons = [];
     this.infinityScrollFn = this.#infinityScroll.bind(this);
-    window.addEventListener("scroll", this.infinityScrollFn);
     this.previous = 0;
     this.next = 21;
   }
@@ -135,6 +134,7 @@ export class HomePage {
         });
       });
     });
+    window.addEventListener("scroll", this.infinityScrollFn);
   }
 
   removeStars() {
