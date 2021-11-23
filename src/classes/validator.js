@@ -32,7 +32,6 @@ export class Validators {
   }
 
   isValidAllProperties() {
-    console.log(this.email, this.name, this.password, this.passwordMatch);
     const hasUser = this.email && this.name && this.password && this.passwordMatch;
     return hasUser;
   }
