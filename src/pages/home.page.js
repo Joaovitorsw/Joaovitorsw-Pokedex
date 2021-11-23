@@ -119,8 +119,22 @@ export class HomePage {
       UtilsService.fade($pokeCard);
       this.$pokemonsContent.append($pokeCard);
     });
-
     this.#fireBaseService.start();
+    this.#fireBaseService.profile$.subscribe(() => {
+      const activeStar = ($card) => {
+        const $favPokemons = $card.querySelector("fav-star .fav-content");
+        $favPokemons.classList.add("active");
+      };
+      this.#fireBaseService.getFavoritesPokemons().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const pokemon = doc.data();
+          const $allCards = document.querySelectorAll("pokemon-card");
+          $allCards.forEach(($card) => {
+            if ($card.pokemonID === pokemon.id) activeStar($card);
+          });
+        });
+      });
+    });
   }
 
   removePokemonsController() {
@@ -159,7 +173,7 @@ export class HomePage {
     const $pokemonsContent = UtilsService.createElementWithClass("div", "pokemons-content");
     this.$pokemonsContent = $pokemonsContent;
     await this.getPokemonsFromCache();
-    this.createAndAppendPokemons();
+    this.createAndAppendPokemons(this.previous, this.next);
 
     const $navigationContent = document.createElement("div");
     $navigationContent.classList.add("navigation-content");
@@ -181,21 +195,6 @@ export class HomePage {
 
     this.changeEvent(this.$pokemonsContent, this.showNotFoundMessage.bind(this));
     this.changeEvent(this.$pokemonsContent, this.removePokemonsController.bind(this));
-    this.#fireBaseService.profile$.subscribe(() => {
-      const activeStar = ($card) => {
-        const $favPokemons = $card.querySelector("fav-star .fav-content");
-        $favPokemons.classList.add("active");
-      };
-      this.#fireBaseService.getFavoritesPokemons().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const pokemon = doc.data();
-          const $allCards = document.querySelectorAll("pokemon-card");
-          $allCards.forEach(($card) => {
-            if ($card.pokemonID === pokemon.id) activeStar($card);
-          });
-        });
-      });
-    });
 
     $navigationContent.append($searchBar);
     $navigationContent.append($profileCard);
