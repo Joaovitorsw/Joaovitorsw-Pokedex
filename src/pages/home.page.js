@@ -134,6 +134,7 @@ export class HomePage {
         });
       });
     });
+    window.addEventListener("scroll", this.infinityScrollFn);
   }
 
   removeStars() {
