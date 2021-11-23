@@ -1,10 +1,11 @@
-@import "mixins";
+@import "../../scss/mixins";
 :root {
   --neutral-color: rgba(0, 0, 0, 0.15);
 }
 
 .navigation-content {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   user-select: none;
   font-family: "Jura", sans-serif;

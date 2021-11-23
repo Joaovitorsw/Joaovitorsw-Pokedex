@@ -128,6 +128,10 @@ user-settings {
       color: #fff;
       letter-spacing: 0.5px;
       font-weight: 300;
+      &:disabled {
+        background-color: #211e57;
+        color: #5e5e5e;
+      }
     }
 
     .button-cancel {

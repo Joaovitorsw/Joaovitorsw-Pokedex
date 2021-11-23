@@ -22,7 +22,6 @@
 .select-box {
   position: relative;
   z-index: 4;
-  margin-top: 34px;
   border: 1px solid #000;
   display: flex;
   flex-direction: column;
@@ -98,7 +97,7 @@
     opacity: 1;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 725px) {
   .select-box {
     margin-top: -3px;
   }

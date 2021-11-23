@@ -1,21 +1,21 @@
+import { LoadingScreenComponent } from "./components/loading-screen/loading-screen.component.js";
 import { ROUTES } from "./constants/ROUTES.js";
 import { FireBaseService } from "./services/fire-base.service.js";
-import { LoadingScreenService } from "./services/loading-screen.service";
 import { PokeAPIService } from "./services/poke-api.service.js";
 
 export class AppComponent {
   #pokeAPIService;
-  #loadingScreenService;
+  #loadingScreen;
   #fireBaseService;
-
   constructor() {
     this.#pokeAPIService = new PokeAPIService();
-    this.#loadingScreenService = new LoadingScreenService();
+    this.declarations = [LoadingScreenComponent];
     this.#fireBaseService = new FireBaseService();
   }
   renderPage() {
     $main.innerHTML = "";
-    this.#loadingScreenService.LoadingPage();
+    this.#loadingScreen = document.createElement("loading-screen");
+    this.#loadingScreen.loadingPage();
 
     const hashedRoute = window.location.hash;
     const targetRoute = this.getTargetRoute(hashedRoute);
@@ -29,7 +29,7 @@ export class AppComponent {
       const $html = await page.getTemplate();
       $main.appendChild($html);
       const timer = fragment === "home" ? 700 : 400;
-      this.#loadingScreenService.removeLoadingScreen(timer);
+      this.#loadingScreen.removeLoadingScreen(timer);
     }, 400);
   }
 
