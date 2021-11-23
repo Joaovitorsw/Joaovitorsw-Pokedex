@@ -78,7 +78,6 @@ export class UserSettingsComponent extends HTMLElement {
   }
   buttonEnable() {
     const hasUser = this.#validators.isValidAllProperties();
-    console.log(hasUser);
     const $submit = this.querySelector(".button-submit");
     $submit.disabled = !hasUser;
   }
