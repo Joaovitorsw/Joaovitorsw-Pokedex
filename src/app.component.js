@@ -7,12 +7,14 @@ export class AppComponent {
   #pokeAPIService;
   #loadingScreen;
   #fireBaseService;
+  #actuallyInstancy;
   constructor() {
     this.#pokeAPIService = new PokeAPIService();
     this.declarations = [LoadingScreenComponent];
     this.#fireBaseService = new FireBaseService();
   }
   renderPage() {
+    this.#actuallyInstancy?.resetPage();
     $main.innerHTML = "";
     this.#loadingScreen = document.createElement("loading-screen");
     this.#loadingScreen.loadingPage();
@@ -22,11 +24,11 @@ export class AppComponent {
 
     const [fragment, param] = targetRoute.split("/");
     const hasParam = !!param;
-    const page = hasParam ? new ROUTES[fragment](param) : new ROUTES[fragment]();
+    this.#actuallyInstancy = hasParam ? new ROUTES[fragment](param) : new ROUTES[fragment]();
 
     setTimeout(async () => {
       await this.#pokeAPIService.requestPokemons();
-      const $html = await page.getTemplate();
+      const $html = await this.#actuallyInstancy.getTemplate();
       $main.appendChild($html);
       const timer = fragment === "home" ? 700 : 400;
       this.#loadingScreen.removeLoadingScreen(timer);

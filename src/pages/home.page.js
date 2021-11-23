@@ -17,6 +17,7 @@ export class HomePage {
     this.#indexDB = new IndexDBService();
     this.#fireBaseService = new FireBaseService();
     this.pokemons = [];
+    this.infinityScroll = true;
     this.enableInfiniteScroll();
     this.previous = 0;
     this.next = 21;
@@ -78,6 +79,7 @@ export class HomePage {
   }
   enableInfiniteScroll() {
     window.addEventListener("scroll", () => {
+      if (this.infinityScroll) return;
       const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
       if (endScroll) {
         this.previous = this.next;
@@ -85,6 +87,10 @@ export class HomePage {
         this.createAndAppendPokemons(this.previous, this.next);
       }
     });
+  }
+
+  resetPage() {
+    this.infinityScroll = true;
   }
 
   resetFilter() {
@@ -136,6 +142,7 @@ export class HomePage {
         });
       });
     });
+    this.infinityScroll = false;
   }
 
   removeStars() {
