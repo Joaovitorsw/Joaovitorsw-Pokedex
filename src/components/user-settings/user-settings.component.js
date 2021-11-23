@@ -33,6 +33,7 @@ export class UserSettingsComponent extends HTMLElement {
           UtilsService.notificationAlert("error", "File is too big!");
           $imageInput.value = "";
           $submit.disabled = true;
+          return;
         }
         $submit.disabled = false;
         $p.innerText = imageFile.name;
