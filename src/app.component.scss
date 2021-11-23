@@ -30,6 +30,9 @@ html.loading,
 html.login,
 html.loading.login {
   overflow: hidden;
+  body {
+    overflow: hidden;
+  }
 }
 
 .fade {

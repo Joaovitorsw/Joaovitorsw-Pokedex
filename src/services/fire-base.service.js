@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateEmail,
   updateProfile,
 } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from "firebase/firestore";
@@ -39,6 +40,7 @@ export class FireBaseService {
 
   hasLogin() {
     const auth = getAuth();
+
     onAuthStateChanged(auth, () => {
       if (auth.currentUser) this.profile$.publish(auth.currentUser);
     });
@@ -73,19 +75,17 @@ export class FireBaseService {
       });
   }
 
-  updateProfile(name) {
+  updateProfile(name, email, password) {
     const auth = getAuth();
-    updateProfile(auth.currentUser, {
-      displayName: name,
-    })
-      .then(() => {
-        UtilsService.notificationAlert("success", "Profile updated");
-        const $profile = document.querySelector("profile-card");
-        $profile.update(auth.currentUser.displayName);
-      })
-      .catch(() => {
-        UtilsService.notificationAlert("error", "An error occurred");
-      });
+    const profile = [];
+    const emailPromise = updateEmail(auth.currentUser, email);
+    const namePromise = updateProfile(auth.currentUser, { displayName: name });
+    emailPromise.then(() => profile.push("Email updated"));
+    namePromise.then(() => profile.push("Name updated"));
+
+    const [type, message] = profile.length == 2 ? ["error", "An error occurred"] : ["success", "Profile updated"];
+
+    UtilsService.notificationAlert(type, message);
   }
 
   uploadFile(file) {
