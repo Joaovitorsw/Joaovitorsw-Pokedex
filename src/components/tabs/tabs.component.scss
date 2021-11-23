@@ -63,20 +63,6 @@ tabs-component {
     }
   }
 
-  .tab {
-    display: none;
-    animation: fade 1s, slide-out 0.5s ease backwards;
-
-    &.active {
-      display: block;
-      padding-left: 2px;
-    }
-    &.active:nth-child(4) {
-      overflow: auto;
-      max-height: calc(100vh - 350px);
-    }
-  }
-
   .about {
     li {
       display: grid;
@@ -166,6 +152,20 @@ tabs-component {
   ::-webkit-scrollbar-track {
     border: 5px solid rgba(0, 0, 0, 0.055);
     border-radius: 80px;
+  }
+
+  .tab {
+    display: none;
+    animation: fade 1s, slide-out 0.5s ease backwards;
+
+    &.active {
+      display: block;
+      padding-left: 2px;
+    }
+    &.active:nth-child(4) {
+      overflow: auto;
+      max-height: calc(100vh - 350px);
+    }
   }
   @media screen and (min-width: 600px) {
     border-radius: 0px 0px 5px 5px;
