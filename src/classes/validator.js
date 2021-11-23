@@ -1,4 +1,11 @@
 export class Validators {
+  constructor() {
+    this.name = false;
+    this.email = false;
+    this.password = false;
+    this.passwordMatch = false;
+  }
+
   isValidEmail(value) {
     const mailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const mailPattern2 = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -25,6 +32,14 @@ export class Validators {
   }
 
   isValidAllProperties() {
-    return this.email && this.name && this.password && this.passwordMatch;
+    console.log(this.email, this.name, this.password, this.passwordMatch);
+    const hasUser = this.email && this.name && this.password && this.passwordMatch;
+    return hasUser;
+  }
+  resetProperties() {
+    this.email = false;
+    this.name = false;
+    this.password = false;
+    this.passwordMatch = false;
   }
 }
