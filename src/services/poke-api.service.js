@@ -9,10 +9,9 @@ export class PokeAPIService {
   createPokemonRequest() {
     const responsePokemon = (id) => `https://pokeapi.co/api/v2/pokemon/${id}/`;
     const indexToId = (index) => index + 1;
-    const generatePokemonPromises = (() =>
-      Array(898)
-        .fill()
-        .map((_, index) => fetch(responsePokemon(indexToId(index))).then((response) => response.json())))();
+    const generatePokemonPromises = Array.from({ length: 898 }, (_, index) =>
+      fetch(responsePokemon(indexToId(index))).then((pokemon) => pokemon.json())
+    );
 
     return generatePokemonPromises;
   }
