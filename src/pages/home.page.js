@@ -17,7 +17,7 @@ export class HomePage {
     this.#indexDB = new IndexDBService();
     this.#fireBaseService = new FireBaseService();
     this.pokemons = [];
-    this.infinityScrollFn = this.#infinityScroll.bind(this);
+    this.infinityScrollFn = this.infinityScroll.bind(this);
     this.previous = 0;
     this.next = 21;
   }
@@ -76,7 +76,7 @@ export class HomePage {
     $selected.innerHTML = "Filter by Generation";
     return UtilsService.notificationAlert("error", "You must be logged");
   }
-  #infinityScroll() {
+  infinityScroll() {
     const endScroll = window.scrollY + window.innerHeight >= document.body.scrollHeight;
     if (endScroll) {
       this.previous = this.next;
