@@ -65,11 +65,11 @@ tabs-component {
 
   .tab {
     display: none;
+    animation: fade 1s, slide-out 0.5s ease;
 
     &.active {
       display: block;
       padding-left: 2px;
-      animation: fade 1s, slide-out 0.5s ease;
     }
     &.active:nth-child(4) {
       overflow: auto;

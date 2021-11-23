@@ -153,7 +153,7 @@ pokemon-details {
     tabs-component {
       .tab.move-list.active:nth-child(4) {
         overflow: auto;
-        max-height: calc(100vh - 400px);
+        max-height: calc(100vh - 450px);
       }
     }
   }
