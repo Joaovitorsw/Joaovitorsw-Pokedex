@@ -7,7 +7,7 @@ user-settings {
   background-color: #fff;
   padding: 20px;
   max-width: 850px;
-  max-height: 700px;
+  max-height: 850px;
   border-radius: 5px;
   box-shadow: 0px 6px 16px rgba(98, 100, 108, 0.5);
 
@@ -79,20 +79,20 @@ user-settings {
     label {
       letter-spacing: 0.75px;
       font-size: 0.9rem;
-      color: #888cbd;
-      opacity: 0.7;
+      color: #6c63ff;
     }
 
     input {
       padding-left: 5px;
       padding-bottom: 5px;
       padding-top: 16px;
-      margin-left: 0px;
+      margin-top: 5px;
+      margin-bottom: 8px;
       width: 100%;
-      background-color: #fff;
+      background-color: #e8f0fe;
       border: none;
       outline: none;
-      border-bottom: 2px solid #eaeaea;
+      border-bottom: 2px solid #6693c0;
       letter-spacing: 0.29px;
       color: #292b43;
       font-size: 0.95rem;
@@ -142,7 +142,11 @@ user-settings {
       letter-spacing: 0.3px;
       font-weight: 300;
       color: #7376a3;
-      opacity: 0.8;
+      transition: background-color 1s, color 1s;
+
+      &:disabled {
+        background-color: #5e5e5e;
+      }
     }
 
     button:hover {
@@ -152,9 +156,22 @@ user-settings {
     button:focus {
       outline: 0;
     }
-  }
 
+    .form-error {
+      opacity: 0;
+      transition: opacity 1s;
+      color: #ef3b3a;
+      font-size: 15px;
+
+      &.invalid {
+        opacity: 1;
+      }
+    }
+  }
   @media screen and (min-width: 600px) {
-    margin: 40px auto 0 auto;
+    margin: 40px auto 40px auto;
+  }
+  @media screen and (min-height: 800px) {
+    max-height: 780px;
   }
 }

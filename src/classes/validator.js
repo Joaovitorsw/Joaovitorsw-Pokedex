@@ -4,6 +4,7 @@ export class Validators {
     this.email = false;
     this.password = false;
     this.passwordMatch = false;
+    this.newPassword = false;
   }
 
   isValidEmail(value) {
@@ -25,6 +26,12 @@ export class Validators {
     const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{9,16}$/;
     const isValid = passwordPattern.test(value);
     this.password = isValid;
+    return isValid;
+  }
+
+  isValidNewPassword(value) {
+    const isValid = this.isValidPassword(value);
+    this.newPassword = isValid;
   }
   passwordIsMatch(previousValue, currentValue) {
     const isValid = previousValue === currentValue;
@@ -32,7 +39,7 @@ export class Validators {
   }
 
   isValidAllProperties() {
-    const hasUser = this.email && this.name && this.password && this.passwordMatch;
+    const hasUser = this.email && this.name && this.password && (this.passwordMatch || this.newPassword);
     return hasUser;
   }
   resetProperties() {

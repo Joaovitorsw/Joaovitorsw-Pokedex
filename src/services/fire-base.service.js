@@ -1,11 +1,14 @@
 import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
   getAuth,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
+  updatePassword,
   updateProfile,
 } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from "firebase/firestore";
@@ -42,7 +45,7 @@ export class FireBaseService {
     const auth = getAuth();
 
     onAuthStateChanged(auth, () => {
-      if (auth.currentUser) this.profile$.publish(auth.currentUser);
+      if (auth.currentUser) this.profile$?.publish(auth.currentUser);
     });
   }
 
@@ -75,17 +78,23 @@ export class FireBaseService {
       });
   }
 
-  updateProfile(name, email, password) {
+  async updateProfile(name, email, password, newPassword, callback) {
     const auth = getAuth();
-    const profile = [];
-    const emailPromise = updateEmail(auth.currentUser, email);
-    const namePromise = updateProfile(auth.currentUser, { displayName: name });
-    emailPromise.then(() => profile.push("Email updated"));
-    namePromise.then(() => profile.push("Name updated"));
+    const user = auth.currentUser;
 
-    const [type, message] = profile.length == 2 ? ["error", "An error occurred"] : ["success", "Profile updated"];
+    const credential = await EmailAuthProvider.credential(user.email, password);
 
-    UtilsService.notificationAlert(type, message);
+    reauthenticateWithCredential(user, credential)
+      .then(async () => {
+        await updateEmail(user, email);
+        await updateProfile(user, { displayName: name });
+        await updatePassword(user, newPassword);
+        callback();
+        UtilsService.notificationAlert("success", "Profile updated");
+      })
+      .catch((error) => {
+        UtilsService.notificationAlert("error", "Wrong Password");
+      });
   }
 
   uploadFile(file) {

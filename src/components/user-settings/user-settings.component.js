@@ -22,6 +22,7 @@ export class UserSettingsComponent extends HTMLElement {
       const template = UtilsService.bindModelToView({ profilePicture }, userSettingsTemplate);
       this.innerHTML = template;
       const $submit = this.querySelector(".button-submit");
+      const $cancel = this.querySelector(".button-cancel");
       $submit.disabled = true;
       const $avatar = this.querySelector(".avatar");
       const $imageInput = this.querySelector("#imageInput");
@@ -43,36 +44,57 @@ export class UserSettingsComponent extends HTMLElement {
 
       $submit.addEventListener("click", async () => {
         const hasUser = this.#validators.isValidAllProperties();
-        if (hasUser) {
-          await this.#fireBaseService.updateProfile($name.value, $email.value, $password.value);
+        const imageFile = $imageInput.files[0];
+        const callback = () => {
           $name.value = "";
           $email.value = "";
           $password.value = "";
-          $passwordMatch.value = "";
-          this.#validators.resetProperties();
+          $newPassword.value = "";
           $submit.disabled = true;
-        }
+          $passwordError.classList.remove("invalid");
+          $cancel.disabled = false;
+          this.#validators.resetProperties();
+        };
 
-        if (!!$imageInput.files[0]) await this.#fireBaseService.uploadFile($imageInput.files[0]);
+        if (!!imageFile) await this.#fireBaseService.uploadFile(imageFile);
+        if (hasUser) {
+          $cancel.disabled = true;
+          await this.#fireBaseService.updateProfile($name.value, $email.value, $password.value, $newPassword.value, callback);
+          $passwordError.innerText = "Wrong Password";
+          $passwordError.classList.add("invalid");
+        }
       });
       const $name = document.querySelector(".full-name");
+      const $nameError = $name.parentElement.querySelector(".form-error");
       $name.addEventListener("input", () => {
         this.#validators.isValidName($name.value);
+        $nameError.classList.add("invalid");
+        if (this.#validators.name) $nameError.classList.remove("invalid");
         this.buttonEnable();
       });
       const $email = document.querySelector(".email");
+      const $emailError = $email.parentElement.querySelector(".form-error");
       $email.addEventListener("input", () => {
         this.#validators.isValidEmail($email.value);
+        $emailError.classList.add("invalid");
+        if (this.#validators.email) $emailError.classList.remove("invalid");
         this.buttonEnable();
       });
       const $password = document.querySelector(".password");
+      const $passwordError = $password.parentElement.querySelector(".form-error");
       $password.addEventListener("input", () => {
         this.#validators.isValidPassword($password.value);
+        $passwordError.innerText = "Invalid Password";
+        $passwordError.classList.add("invalid");
+        if (this.#validators.password) $passwordError.classList.remove("invalid");
         this.buttonEnable();
       });
-      const $passwordMatch = document.querySelector(".passwordMatch");
-      $passwordMatch.addEventListener("input", () => {
-        this.#validators.passwordIsMatch($password.value, $passwordMatch.value);
+      const $newPassword = document.querySelector(".passwordNew");
+      const $passwordMatchError = $newPassword.parentElement.querySelector(".form-error");
+      $newPassword.addEventListener("input", () => {
+        $passwordMatchError.classList.add("invalid");
+        this.#validators.isValidNewPassword($newPassword.value);
+        if (this.#validators.newPassword) $passwordMatchError.classList.remove("invalid");
         this.buttonEnable();
       });
     });
