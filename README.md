@@ -21,7 +21,7 @@
     <img alt="Developed by João Vitor" src="https://img.shields.io/badge/Developer-João_Vitor-%3498db?color=3498db&style=for-the-badge&label=Desenvolvedor">
   </a>  
   <img alt="Project License" src="https://img.shields.io/apm/l/vim-mode?style=for-the-badge&label=licen%C3%A7a"/>   
-   <img alt="Project Status" src="https://img.shields.io/badge/Em Progresso-%3498db?color=yellow&style=for-the-badge&label=Status">
+   <img alt="Project Status" src=https://camo.githubusercontent.com/e1242aef6552b4e9b2d6764e66eb55f29758cb1e6d332b74efa89b3144339b25/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f636f6e636c75c3ad646f2d253334393864623f636f6c6f723d677265656e267374796c653d666f722d7468652d6261646765266c6162656c3d537461747573>
 
 </p>
 
@@ -38,20 +38,22 @@
 
 ---
 
-## :eye_speech_bubble: **Visualizar**
+## 👁️ **Visualizar**
 
 <div align="center">
 
 Deploy do front-end efetuado no [Netlify](https://www.netlify.com/) para visualizar: [Clique Aqui](https://joaovitorsw-pokedex.netlify.app/)
 
-|                             :computer:Desktop                             |                             :iphone: Mobile                              |
-| :-----------------------------------------------------------------------: | :----------------------------------------------------------------------: |
-| <kbd><img src=".github/previews/desktop-preview.jpg" alt="Tablet"/></kbd> | <kbd><img src=".github/previews/mobile-preview.jpg" alt="Mobile"/></kbd> |
+|                              :computer:Desktop                              |                              :iphone: Mobile                               |
+| :-------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+|  <kbd><img src=".github/previews/desktop-preview.jpg" alt="Tablet"/></kbd>  |  <kbd><img src=".github/previews/mobile-preview.jpg" alt="Mobile"/></kbd>  |
+| <kbd><img src=".github/previews/desktop-preview-2.jpg" alt="Tablet"/></kbd> | <kbd><img src=".github/previews/mobile-preview-2.jpg" alt="Mobile"/></kbd> |
+| <kbd><img src=".github/previews/desktop-preview-3.jpg" alt="Tablet"/></kbd> | <kbd><img src=".github/previews/mobile-preview-3.jpg" alt="Mobile"/></kbd> |
 
 </div>
   
 ---
-## :information_source: _Sobre_
+## ℹ️ _Sobre_
 
 <div align="center">
 
@@ -63,7 +65,7 @@ Minha aplicação que simula uma Pokedex !
 
 </div>
 
-## :arrow_forward: **Executar**
+## ▶️ **Executar**
 
 <div align="center">
 
@@ -106,7 +108,7 @@ $ yarn start
 
 ---
 
-## :hammer_and_wrench: _Tecnologias_
+## 🛠️ _Tecnologias_
 
 <div align="center">
 
@@ -114,8 +116,8 @@ $ yarn start
 | :-----------------------------: |
 
 | [HTML 5](https://www.w3schools.com/html/) |
-| [CSS3](https://www.w3schools.com/css/) |
-| [JavaScript ES6](https://developer.mozilla.org/en-US/docs/Web/JavaScript) |
+| [SCSS](https://sass-lang.com/) |
+| [JavaScript ](https://developer.mozilla.org/en-US/docs/Web/JavaScript) |
 | [Parcel](https://parceljs.org/) |
 | [NodeJS](https://nodejs.org/en/) |
 
@@ -123,7 +125,7 @@ $ yarn start
 
 ---
 
-## :brain: _Conceitos Aplicados_
+## 🧠 _Conceitos Aplicados_
 
 <div align="center">
 
@@ -140,24 +142,35 @@ $ yarn start
 |            SPA             |
 |        Async Await         |
 |  Destructuring Assignment  |
+|      Custom Elements       |
+|       Custom Events        |
+|         Validators         |
+|         Observable         |
+|          IndexDB           |
+|          Services          |
+|          Firebase          |
 
 </div>
 
 ---
 
-## :sparkles: _Funcionalidades_
+## ✨ _Funcionalidades_
 
 <div align="center">
 
-|              :page_facing_up:               |
-| :-----------------------------------------: |
-| Acesso aos detalhes de cada um dos Pokemons |
+|                          :page_facing_up:                           |
+| :-----------------------------------------------------------------: |
+|                           CRUD de usuário                           |
+| Armazenamento de informação de pokemons favoritos no banco de dados |
+|             Acesso aos detalhes de cada um dos Pokemons             |
+|             Filtro de pokemons por favoritos e gerações             |
+|                   Filtro de pokemons por pesquisa                   |
 
 </div>
 
 ---
 
-## :boy: _Autor_
+## 👦 _Autor_
 
 <div align="center">
 
@@ -177,7 +190,7 @@ Desenvolvido com ❤️ por João Vitor Pereira dos Santos 👋🏽 Meus Contato
 
 ---
 
-## :balance_scale: _Licença_
+## ⚖️ _Licença_
 
 <div align="center">
 
