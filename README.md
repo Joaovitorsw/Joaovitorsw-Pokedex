@@ -6,7 +6,7 @@
 
 <div align="right">
   
-  [![Portuguese](https://www.countryflags.io/br/flat/32.png)](README.md)
+  [![Portuguese](https://cdn-icons-png.flaticon.com/32/3022/3022546.png)](README.md)
   
 </div>
 
@@ -38,7 +38,7 @@
 
 ---
 
-## 👁️ **Visualizar**
+## :eye_speech_bubble: **Visualizar**
 
 <div align="center">
 
@@ -53,7 +53,7 @@ Deploy do front-end efetuado no [Netlify](https://www.netlify.com/) para visuali
 </div>
   
 ---
-## ℹ️ _Sobre_
+## :information_source: _Sobre_
 
 <div align="center">
 
@@ -65,7 +65,7 @@ Minha aplicação que simula uma Pokedex !
 
 </div>
 
-## ▶️ **Executar**
+## :arrow_forward: **Executar**
 
 <div align="center">
 
@@ -108,7 +108,7 @@ $ yarn start
 
 ---
 
-## 🛠️ _Tecnologias_
+## :hammer_and_wrench: _Tecnologias_
 
 <div align="center">
 
@@ -125,7 +125,7 @@ $ yarn start
 
 ---
 
-## 🧠 _Conceitos Aplicados_
+## :brain: _Conceitos Aplicados_
 
 <div align="center">
 
@@ -154,7 +154,7 @@ $ yarn start
 
 ---
 
-## ✨ _Funcionalidades_
+## :sparkles: _Funcionalidades_
 
 <div align="center">
 
@@ -170,7 +170,7 @@ $ yarn start
 
 ---
 
-## 👦 _Autor_
+## :boy: _Autor_
 
 <div align="center">
 
@@ -190,7 +190,7 @@ Desenvolvido com ❤️ por João Vitor Pereira dos Santos 👋🏽 Meus Contato
 
 ---
 
-## ⚖️ _Licença_
+## :balance_scale: _Licença_
 
 <div align="center">
 
