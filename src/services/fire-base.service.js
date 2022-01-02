@@ -100,17 +100,12 @@ export class FireBaseService {
   uploadFile(file) {
     const auth = getAuth();
     const storage = getStorage();
-    const urlRef = ref(storage, `users/${auth.currentUser.uid}/profile.jpg`);
+    const urlRef = ref(storage, `users/${auth.currentUser.uid}/profile2.jpg`);
 
     uploadBytes(urlRef, file).then(() => getDownloadURL(urlRef).then((imgUrl) => this.uploadImage(imgUrl)));
   }
   async addFavoritePokemon(pokemon) {
-    const auth = getAuth();
-    const db = getFirestore();
-    const userCollectionReference = collection(db, "users");
-    const userReference = doc(userCollectionReference, auth.currentUser.uid);
-    const favoritesCollection = collection(userReference, "favorites");
-
+    const favoritesCollection = this.getFavoritePath();
     try {
       await addDoc(favoritesCollection, pokemon);
     } catch (error) {
@@ -138,9 +133,12 @@ export class FireBaseService {
     const querySnapshot = await getDocs(favoritesCollection);
     querySnapshot.forEach((document) => {
       const actuallyPokemonID = document.data().id;
-      const isThePokemon = actuallyPokemonID === pokemon.id;
+      const isThePokemon = actuallyPokemonID !== pokemon.id;
+
+      if (isThePokemon) return;
+
       const documentRef = doc(favoritesCollection, document.id);
-      if (isThePokemon) return deleteDoc(documentRef);
+      deleteDoc(documentRef);
     });
   }
 

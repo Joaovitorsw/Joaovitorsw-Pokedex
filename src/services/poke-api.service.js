@@ -51,7 +51,7 @@ export class PokeAPIService {
     return pokemon;
   }
 
-  createPokemonDetailsObject({ moves, abilities, stats, height, weight } = object) {
+  createPokemonDetailsObject({ moves, abilities, stats, height, weight }) {
     const pokemonDetails = { moves, abilities, stats, height, weight };
     return pokemonDetails;
   }

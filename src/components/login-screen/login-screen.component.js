@@ -44,6 +44,7 @@ export class LoginScreenComponent extends HTMLElement {
   setListeners() {
     const $exitButton = this.querySelector(".exit");
     $exitButton.addEventListener("click", () => this.removeScreen());
+
     const $loginEmail = this.querySelector(".login-form input[type=email]");
     const $loginPassword = this.querySelector(".login-form input[type=password]");
     const $loginA = this.querySelector(".login-form a");
