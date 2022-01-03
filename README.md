@@ -114,7 +114,6 @@ $ yarn start
 
 | :globe_with_meridians: FrontEnd |
 | :-----------------------------: |
-
 | [HTML 5](https://www.w3schools.com/html/) |
 | [SCSS](https://sass-lang.com/) |
 | [JavaScript ](https://developer.mozilla.org/en-US/docs/Web/JavaScript) |
